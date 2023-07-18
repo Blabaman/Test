@@ -101,8 +101,6 @@ POST /users/signin
 
 #### Відповідь
 
-[test](#ADVERTS)
-
 ```json
 HTTP 200
 {
@@ -154,7 +152,7 @@ HTTP 200
 ### Параметри
 
 * `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* [`avalLength`](#avallength) (array): Перелік можливих довжин уроку.
+* [`avalLength`](#avalLength) (array): Перелік можливих довжин уроку.
 * [`avalShedule`](#avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
 * [`tagsSpecialization`](#tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
 * [`tagsHobby`](#tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
