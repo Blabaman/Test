@@ -32,6 +32,7 @@ HTTP 400
 * `description_too_long`
 * `user_already_exists`
 * `invalid_credentials`
+* `no_adverts_found`
 
 </details open>
 
@@ -42,7 +43,7 @@ HTTP 400
 
 </summary>
 
-## Реєстрація
+## Signup
 
 Створення нового користувача.
 
@@ -77,10 +78,9 @@ HTTP 200
 ### Помилки
 
 * `user_already_exists`: пошта вже прив'язана до іншого користувача.
-
 * `invalid_value:` д.п. відсутній символ '@' у пошті.
 
-## Вхід
+## Signin
 
 Вхід користувача до системи.
 
@@ -113,7 +113,7 @@ HTTP 200
 * `invalid_credentials`: невірний пароль або відсутній користувач з `email` поштою.
 * `invalid_value`: д.п. відсутній символ '@' у пошті.
 
-## Вихід
+## Logout
 
 Вихід користувача з системи.
 
@@ -145,7 +145,7 @@ HTTP 200
  
 </summary>
 
-## Створення оголошення
+## Create
 
 Створення вчителем оголошення.
 
@@ -181,6 +181,9 @@ POST /adverts/create
 ```
 
 ### Відповідь
+Ідентифікатор створеного оголошення.
+
+* `id` (int): ідентифікатор створеного оголошення.
 
 ```json
 HTTP 200
@@ -195,6 +198,128 @@ HTTP 200
 * `invalid_value`: д.п. пустий перелік довжин уроку.
 * `invalid_tag`: використання невалідного тегу, д.п. `"cheese"` у `tagsTeachingLang`.
 * `description_too_long`: довжина опису перевищує максимальну.
+
+## Page
+
+Генерація сторінки оголошень
+
+### Параметри
+
+* `pageNum` (int): Номер сторінки. Нумераця починається з `1`.
+
+### Тіло запиту
+
+```json
+GET /adverts/page
+{
+    "pageNum": 2
+}
+```
+
+### Відповідь
+Масив об'єктів, що коротко описують `advertCount` оголошень.
+
+* `advertCount` (int): кількість елементів масиву, що описують оголошення.
+* `advertId` (int): ідентифікатор оголошення.
+* `teacherName` (string): ім'я вчителя.
+* [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
+* `shortDescription` (string): Короткий опис оголошення.
+* `rating` (float): рейтинг вчителя за 5-ти бальною шкалою.
+* `profilePicture` (string): назва файлу профільного зображення. Зображення розміщене за шляхом //TODO
+* `country` (string): код країни вчителя згідно [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
+* `certified` (bool): флажок, що вказує чи є вчитель офіційно сертифікований.
+* `isFavorite` (bool): флажок, що вказує чи оголошення є доданим до вподобаних.
+
+```json
+HTTP 200
+{
+    [
+        {
+            "advertId": 541,
+            "teacherName": "John Smith",
+            "tagsHobby": [ "fishing", "gardening", "board games" ],
+            "tagsSpokenLang": [ "ukrainian", "english", "german" ],
+            "tagsTeachingLang": [ "english", "german" ],
+            "tagsNativeLang": [ "ukrainian" ],
+            "shortDescription": "This is a short desctiption",
+            "rating": 4.7,
+            "profilePicture": "541.png",
+            "country": "UKR.png",
+            "certified": true,
+            "isFavorite": false
+        },..
+    ]
+}
+```
+
+### Помилки
+
+* `invalid_value`: Номер сторінки менший `1`.
+* `no_adverts_found`: Немає оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
+
+## Advert
+
+Повний опис оголошення
+
+### Параметри
+
+* `pageNum` (int): Номер сторінки. Нумераця починається з `1`.
+
+### Тіло запиту
+
+```json
+GET /adverts/page
+{
+    "pageNum": 2
+}
+```
+
+### Відповідь
+Масив об'єктів, що коротко описують `advertCount` оголошень.
+
+* `advertCount` (int): кількість елементів масиву, що описують оголошення.
+* `advertId` (int): ідентифікатор оголошення.
+* `teacherName` (string): ім'я вчителя.
+* [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
+* `shortDescription` (string): Короткий опис оголошення.
+* `rating` (float): рейтинг вчителя за 5-ти бальною шкалою.
+* `profilePicture` (string): назва файлу профільного зображення. Зображення розміщене за шляхом //TODO
+* `country` (string): код країни вчителя згідно [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
+* `certified` (bool): флажок, що вказує чи є вчитель офіційно сертифікований.
+* `isFavorite` (bool): флажок, що вказує чи оголошення є доданим до вподобаних.
+
+```json
+HTTP 200
+{
+    [
+        {
+            "advertId": 541,
+            "teacherName": "John Smith",
+            "tagsHobby": [ "fishing", "gardening", "board games" ],
+            "tagsSpokenLang": [ "ukrainian", "english", "german" ],
+            "tagsTeachingLang": [ "english", "german" ],
+            "tagsNativeLang": [ "ukrainian" ],
+            "shortDescription": "This is a short desctiption",
+            "rating": 4.7,
+            "profilePicture": "541.png",
+            "country": "UKR.png",
+            "certified": true,
+            "isFavorite": false
+        },..
+    ]
+}
+```
+
+### Помилки
+
+* `invalid_value`: Номер сторінки менший `1`.
+* `no_adverts_found`: Немає оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
 
 </details>
 
