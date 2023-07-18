@@ -1,6 +1,9 @@
-# API
-
-## Помилки
+<details open>
+  <summary>
+          
+  # Помилки
+          
+  </summary>
 
 ### Тіло відповіді
 
@@ -30,12 +33,16 @@ HTTP 400
 * `user_already_exists`
 * `invalid_credentials`
 
+</details open>
+
 <details>
 <summary>
 
-## Реєстрація
+# USERS
 
 </summary>
+
+## Реєстрація
 
 Створення нового користувача.
 
@@ -72,8 +79,6 @@ HTTP 200
 * `user_already_exists`: пошта вже прив'язана до іншого користувача.
 
 * `invalid_value:` д.п. відсутній символ '@' у пошті.
-
-</details>
 
 ## Вхід
 
@@ -131,6 +136,15 @@ HTTP 200
 
 Відсутні
 
+</details>
+
+<details open>
+<summary>
+
+  # ADVERTS
+ 
+</summary>
+
 ## Створення оголошення
 
 Створення вчителем оголошення.
@@ -138,13 +152,13 @@ HTTP 200
 ### Параметри
 
 * `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* `avalLength` (JSON): Перелік можливих довжин уроку.
-* `avalShedule` (JSON): Перелік днів та інтервалів годин, у які може бути проведений урок.
-* `tagsSpecialization` (JSON): Перелік тегів, що визначають спеціалізацію вчителя.
-* `tagsHobby` (JSON): Перелік тегів, що визначають хобі вчителя.
-* `tagsSpokenLang` (JSON): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* `tagsTeachingLang` (JSON): Перелік тегів, що визначають мови, які вчитель викладає.
-* `tagsNativeLang` (JSON): Перелік тегів, що визначають рідні мови вчителя.
+* [`avalLength`](#array_avalLength) (array): Перелік можливих довжин уроку.
+* [`avalShedule`](#array_avalShedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
+* [`tagsSpecialization`](#array_tagsSpecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
+* [`tagsHobby`](#array_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [`tagsSpokenLang`](#array_tagsSpokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [`tagsTeachingLang`](#array_tagsTeachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* [`tagsNativeLang`](#array_tagsNativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
 * `shortDescription` (string): Короткий опис оголошення (200 символів).
 * `fullDescription` (string): Повний опис оголошення (1000 символів).
 
@@ -155,11 +169,11 @@ POST /adverts/create
 {
     "price": 59.99,
     "avalLength": [ 30, 60, 120 ],
-    "avalShedule": [ [13, 15.5], [18, 18.5] ],
+    "avalShedule": [ "monday" : [[13, 15.5], [18, 18.5]], "thursday" : [[8, 12]] ]
     "tagsSpecialization": [ "improvement", "basics" ],
     "tagsHobby": [ "fishing", "gardening", "board games" ],
     "tagsSpokenLang": [ "ukrainian", "english", "german" ],
-    "tagsTeachingLang": [ "english", "german" a],
+    "tagsTeachingLang": [ "english", "german" ],
     "tagsNativeLang": [ "ukrainian" ],
     "shortDescription": "This is a short desctiption",
     "fullDescription": "This is a full desctiption"
@@ -171,23 +185,121 @@ POST /adverts/create
 ```json
 HTTP 200
 {
-    id: 541
+    "id": 541
 }
 ```
 
 ### Помилки
 
-* `invalid_operation`: користувач вже має огологшення.
+* `invalid_operation`: користувач вже має оголошення.
 * `invalid_value`: д.п. пустий перелік довжин уроку.
 * `invalid_tag`: використання невалідного тегу, д.п. `"cheese"` у `tagsTeachingLang`.
 * `description_too_long`: довжина опису перевищує максимальну.
 
-### Схеми
+<details>
+<summary>
 
-avalLength
+### Структури
 
-```json
-avalLength {
-    [int[, int]
-}
+</summary>
+
+<a name="array_avalLength"></a>
+#### avalLength
+Перелік можливих довжин уроку. Складається з масиву цілих чисел `int`, що вказують на довжину урока в хвилинах.
+`int` повинен бути рівним одному з наступних чисел: `30, 60, 90, 120`.\
+Масив не може бути пустим.
+
 ```
+"avalLength": [ int,.. ]
+```
+
+<a name="array_avalShedule"></a>
+#### avalShedule
+Перелік днів та інтервалів годин, у які може бути проведений урок. Складається з іменованого масиву типу `day: [intervals]`,
+де `day` є назвою дня англійською у нижньому регістрі, `[intervals]` є двовимірним масивом розміром `[n, 2]`, і позначає інтервали,
+у які може бути проведений урок. Значення інтервалу повинні належати `[0, 24]` та можуть мати дробову частину `.5` для позначення 30 хвилин.\
+Масив не може бути пустим.
+
+```
+"avalShedule": [ string: [ [float, float],.. ],.. ]
+```
+
+<a name="array_tagsSpecialization"></a>
+#### tagsSpecialization
+Перелік тегів, що визначають спеціалізацію вчителя. Складається з масиву рядків що можуть набувати наступних значень.
+
+<details>
+<summary></summary>
+
+```
+"for business", "basics", "for_children", "improvement" //на міті домовимось які ще
+```
+
+</details>
+
+Масив не може бути пустим.
+
+```
+"tagsSpecialization": [ string,.. ]
+```
+
+<a name="array_tagsHobby"></a>
+#### tagsHobby
+Перелік тегів, що визначають хобі вчителя. Складається з масиву рядків що можуть набувати наступних значень.
+
+<details>
+<summary></summary>
+
+```
+"reading", "martial_arts", "woodworking", "gardening", "video_games", "fishing yoga", "traveling", "golf", "watching_sports", "board games", "writing", "running", "tennis", "volunteer work", "dancing", "painting", "cooking", "cycling", "movie watching", "podcasts", "television", "music"
+```
+
+</details>
+
+Масив не може бути пустим.
+
+```
+"tagsHobby": [ string,.. ]
+```
+
+<a name="array_tagsSpokenLang"></a>
+#### tagsSpokenLang
+Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати наступних значень.
+
+<details>
+<summary></summary>
+
+```
+"albanian", "arabic", "armenian", "azerbaijani", "belarusian", "bulgarian", "chinese", "croatian", "czech", "danish", "dutch", "english", "estonian", "finnish", "french", "georgian", "german", "greek", "hungarian", "indian", "indonesian", "japanese", "korean", "latvian", "lithuanian", "macedonian", "malaysian", "mandarin", "moldovan", "mongolian", "norwegian", "pakistani", "polish", "portuguese", "romanian", "russian", "serbian", "slovak", "slovenian", "somali", "spanish", "swedish", "taiwanese", "turkish", "ukrainian", "uzbek", "vietnamese", "welsh"
+```
+
+</details>
+
+Масив не може бути пустим.
+
+```
+"tagsSpokenLang": [ string,.. ]
+```
+
+<a name="array_tagsTeachingLang"></a>
+#### tagsTeachingLang
+Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array_tagsSpokenLang).\
+Масив не може бути пустим.
+
+```
+"tagsTeachingLang": [ string,.. ]
+```
+
+<a name="array_tagsNativeLang"></a>
+#### tagsNativeLang
+Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array_tagsSpokenLang).\
+Масив не може бути пустим.
+
+```
+"tagsNativeLang": [ string,.. ]
+```
+
+
+</details>
+  
+</details>
