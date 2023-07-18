@@ -230,14 +230,9 @@ HTTP 200
 ## tagsSpecialization
 Перелік тегів, що визначають спеціалізацію вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details open>
-<summary></summary>
-
 ```
 "for business", "basics", "for_children", "improvement" //на міті домовимось які ще
 ```
-
-</details>
 
 Масив не може бути пустим.
 
@@ -249,14 +244,9 @@ HTTP 200
 ## tagsHobby
 Перелік тегів, що визначають хобі вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details open>
-<summary></summary>
-
 ```
 "reading", "martial_arts", "woodworking", "gardening", "video_games", "fishing yoga", "traveling", "golf", "watching_sports", "board games", "writing", "running", "tennis", "volunteer work", "dancing", "painting", "cooking", "cycling", "movie watching", "podcasts", "television", "music"
 ```
-
-</details>
 
 Масив не може бути пустим.
 
@@ -268,14 +258,9 @@ HTTP 200
 ## tagsSpokenLang
 Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details open>
-<summary></summary>
-
 ```
 "albanian", "arabic", "armenian", "azerbaijani", "belarusian", "bulgarian", "chinese", "croatian", "czech", "danish", "dutch", "english", "estonian", "finnish", "french", "georgian", "german", "greek", "hungarian", "indian", "indonesian", "japanese", "korean", "latvian", "lithuanian", "macedonian", "malaysian", "mandarin", "moldovan", "mongolian", "norwegian", "pakistani", "polish", "portuguese", "romanian", "russian", "serbian", "slovak", "slovenian", "somali", "spanish", "swedish", "taiwanese", "turkish", "ukrainian", "uzbek", "vietnamese", "welsh"
 ```
-
-</details>
 
 Масив не може бути пустим.
 
