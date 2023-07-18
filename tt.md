@@ -35,7 +35,7 @@ HTTP 400
 
 </details open>
 
-<details>
+<details open>
 <summary>
 
 # USERS
@@ -230,7 +230,7 @@ HTTP 200
 ## tagsSpecialization
 Перелік тегів, що визначають спеціалізацію вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details>
+<details open>
 <summary></summary>
 
 ```
@@ -249,7 +249,7 @@ HTTP 200
 ## tagsHobby
 Перелік тегів, що визначають хобі вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details>
+<details open>
 <summary></summary>
 
 ```
@@ -268,7 +268,7 @@ HTTP 200
 ## tagsSpokenLang
 Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати наступних значень.
 
-<details>
+<details open>
 <summary></summary>
 
 ```
