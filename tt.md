@@ -152,13 +152,13 @@ HTTP 200
 ### Параметри
 
 * `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* [`avalLength`](#array_avalLength) (array): Перелік можливих довжин уроку.
-* [`avalShedule`](#array_avalShedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
-* [`tagsSpecialization`](#array_tagsSpecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
-* [`tagsHobby`](#array_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [`tagsSpokenLang`](#array_tagsSpokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [`tagsTeachingLang`](#array_tagsTeachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* [`tagsNativeLang`](#array_tagsNativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
+* [`avalLength`](#array-avalLength) (array): Перелік можливих довжин уроку.
+* [`avalShedule`](#array-avalShedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
+* [`tagsSpecialization`](#array-tagsSpecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
+* [`tagsHobby`](#array-tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [`tagsSpokenLang`](#array-tagsSpokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [`tagsTeachingLang`](#array-tagsTeachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* [`tagsNativeLang`](#array-tagsNativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
 * `shortDescription` (string): Короткий опис оголошення (200 символів).
 * `fullDescription` (string): Повний опис оголошення (1000 символів).
 
@@ -203,7 +203,7 @@ HTTP 200
 
 </summary>
 
-<a name="array_avalLength"></a>
+<a name="array-avalLength"></a>
 #### avalLength
 Перелік можливих довжин уроку. Складається з масиву цілих чисел `int`, що вказують на довжину урока в хвилинах.
 `int` повинен бути рівним одному з наступних чисел: `30, 60, 90, 120`.\
@@ -213,7 +213,7 @@ HTTP 200
 "avalLength": [ int,.. ]
 ```
 
-<a name="array_avalShedule"></a>
+<a name="array-avalShedule"></a>
 #### avalShedule
 Перелік днів та інтервалів годин, у які може бути проведений урок. Складається з іменованого масиву типу `day: [intervals]`,
 де `day` є назвою дня англійською у нижньому регістрі, `[intervals]` є двовимірним масивом розміром `[n, 2]`, і позначає інтервали,
@@ -224,7 +224,7 @@ HTTP 200
 "avalShedule": [ string: [ [float, float],.. ],.. ]
 ```
 
-<a name="array_tagsSpecialization"></a>
+<a name="array-tagsSpecialization"></a>
 #### tagsSpecialization
 Перелік тегів, що визначають спеціалізацію вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
@@ -243,7 +243,7 @@ HTTP 200
 "tagsSpecialization": [ string,.. ]
 ```
 
-<a name="array_tagsHobby"></a>
+<a name="array-tagsHobby"></a>
 #### tagsHobby
 Перелік тегів, що визначають хобі вчителя. Складається з масиву рядків що можуть набувати наступних значень.
 
@@ -262,7 +262,7 @@ HTTP 200
 "tagsHobby": [ string,.. ]
 ```
 
-<a name="array_tagsSpokenLang"></a>
+<a name="array-tagsSpokenLang"></a>
 #### tagsSpokenLang
 Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати наступних значень.
 
@@ -281,18 +281,18 @@ HTTP 200
 "tagsSpokenLang": [ string,.. ]
 ```
 
-<a name="array_tagsTeachingLang"></a>
+<a name="array-tagsTeachingLang"></a>
 #### tagsTeachingLang
-Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array_tagsSpokenLang).\
+Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array-tagsSpokenLang).\
 Масив не може бути пустим.
 
 ```
 "tagsTeachingLang": [ string,.. ]
 ```
 
-<a name="array_tagsNativeLang"></a>
+<a name="array-tagsNativeLang"></a>
 #### tagsNativeLang
-Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array_tagsSpokenLang).\
+Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#array-tagsSpokenLang).\
 Масив не може бути пустим.
 
 ```
