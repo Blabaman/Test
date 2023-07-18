@@ -236,6 +236,7 @@ GET /adverts/page
 ```json
 HTTP 200
 {
+    "advertCount": 10,
     [
         {
             "advertId": 541,
