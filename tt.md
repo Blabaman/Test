@@ -101,6 +101,8 @@ POST /users/signin
 
 #### Відповідь
 
+[test](#ADVERTS)
+
 ```json
 HTTP 200
 {
