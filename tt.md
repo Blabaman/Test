@@ -155,7 +155,7 @@ HTTP 200
 * [`avalLength`](#avallength) (array): Перелік можливих довжин уроку.
 * [`avalShedule`](#avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
 * [`tagsSpecialization`](#tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
-* [`tagsHobby`](#tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [`tagsHobby`](####tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
 * [`tagsSpokenLang`](#tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
 * [`tagsTeachingLang`](#tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
 * [`tagsNativeLang`](#tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
