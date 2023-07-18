@@ -152,13 +152,13 @@ HTTP 200
 ### Параметри
 
 * `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* [```avalLength```](#avalLength) (array): Перелік можливих довжин уроку.
-* [`avalShedule`](#avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
-* [`tagsSpecialization`](#tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
-* [`tagsHobby`](#tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [`tagsSpokenLang`](#tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [`tagsTeachingLang`](#tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* [`tagsNativeLang`](#tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
+* [avalLength](#avalLength) (array): Перелік можливих довжин уроку.
+* [avalShedule](#avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
+* [tagsSpecialization](#tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
+* [tagsHobby](#tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [tagsSpokenLang](#tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [tagsTeachingLang](#tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* [tagsNativeLang](#tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
 * `shortDescription` (string): Короткий опис оголошення (200 символів).
 * `fullDescription` (string): Повний опис оголошення (1000 символів).
 
