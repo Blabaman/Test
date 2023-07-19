@@ -1,9 +1,9 @@
 * [Помилки](#Помилки)
-* [USERS](#USERS)
+* [Users](#Users)
   * [Signup](#Signup)
   * [Signup](#Signin)
   * [Signout](#Signout)
-* [ADVERTS](#ADVERTS)
+* [Adverts](#Adverts)
   * [Create](#Create)
   * [Page](#Page)
   * [Advert](#Advert)
@@ -53,7 +53,7 @@ HTTP 400
 <details open>
 <summary>
 
-# USERS
+# Users
 
 </summary>
 
@@ -153,7 +153,7 @@ HTTP 200
 <details open>
 <summary>
 
-  # ADVERTS
+# Adverts
  
 </summary>
 
