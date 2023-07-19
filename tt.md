@@ -59,9 +59,9 @@ HTTP 400
 ```json
 POST /users/signup
 {
-"name": "John Smith",
-"email": "john.smith@gmail.com",
-"password": "123qwerty"
+    "name": "John Smith",
+    "email": "john.smith@gmail.com",
+    "password": "123qwerty"
 }
 ```
 
