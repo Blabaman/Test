@@ -1,4 +1,15 @@
-* [# Помилки](#Помилки)
+* [Помилки](#Помилки)
+* [USERS](#USERS)
+  * [Signup](#Signup)
+  * [Signup](#Signin)
+  * [Signout](#Signout)
+* [ADVERTS](#ADVERTS)
+  * [Create](#Create)
+  * [Page](#Page)
+  * [Advert](#Advert)
+  * [SetFavorite](#SetFavorite)
+* [Структури](#Структури)
+
 
 <details open>
   <summary>
@@ -72,7 +83,7 @@ POST /users/signup
 ```json
 HTTP 200
 {
-
+    //TODO
 }
 ```
 
@@ -105,7 +116,7 @@ POST /users/signin
 ```json
 HTTP 200
 {
-
+    //TODO
 }
 ```
 
@@ -114,14 +125,14 @@ HTTP 200
 * `invalid_credentials`: невірний пароль або відсутній користувач з `email` поштою.
 * `invalid_value`: д.п. відсутній символ '@' у пошті.
 
-## Logout
+## Signout
 
 Вихід користувача з системи.
 
 ### Тіло запиту
 
 ```json
-POST /users/logout
+POST /users/signout
 ```
 
 ### Відповідь
@@ -129,7 +140,7 @@ POST /users/logout
 ```json
 HTTP 200
 {
-
+    //TODO
 }
 ```
 
