@@ -217,9 +217,9 @@ GET /adverts/page
 ```
 
 ### Відповідь
-Масив об'єктів, що коротко описують `advertCount` оголошень.
+Масив об'єктів `adverts`, що коротко описує `advertCount` оголошень.
 
-* `advertCount` (int): кількість елементів масиву, що описують оголошення.
+* `advertCount` (int): кількість елементів масиву `adverts`, що описують оголошення.
 * `advertId` (int): ідентифікатор оголошення.
 * `teacherName` (string): ім'я вчителя.
 * [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
@@ -237,6 +237,7 @@ GET /adverts/page
 HTTP 200
 {
     "advertCount": 10,
+    "adverts":
     [
         {
             "advertId": 541,
@@ -259,7 +260,7 @@ HTTP 200
 ### Помилки
 
 * `invalid_value`: Номер сторінки менший `1`.
-* `no_adverts_found`: Немає оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
+* `no_adverts_found`: Недостатньо оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
 
 ## Advert
 
@@ -267,33 +268,40 @@ HTTP 200
 
 ### Параметри
 
-* `pageNum` (int): Номер сторінки. Нумераця починається з `1`.
+* `advertId` (int): ідентифікатор оголошення.
 
 ### Тіло запиту
 
 ```json
-GET /adverts/page
+GET /adverts/advert
 {
-    "pageNum": 2
+    "advertId": 541
 }
 ```
 
 ### Відповідь
-Масив об'єктів, що коротко описують `advertCount` оголошень.
+Повний опис оголошення.
 
-* `advertCount` (int): кількість елементів масиву, що описують оголошення.
 * `advertId` (int): ідентифікатор оголошення.
 * `teacherName` (string): ім'я вчителя.
+* `price` (float): Ціна уроку довжиною 1 годину в у.о..
+* [avalLength](#link_avalLength) (array): Перелік можливих довжин уроку.
+* [avalShedule](#link_avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
+* [tagsSpecialization](#link_tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
 * [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
 * [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
 * [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
 * [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
 * `shortDescription` (string): Короткий опис оголошення.
+* `fullDescription` (string): Повний опис оголошення.
 * `rating` (float): рейтинг вчителя за 5-ти бальною шкалою.
 * `profilePicture` (string): назва файлу профільного зображення. Зображення розміщене за шляхом //TODO
 * `country` (string): код країни вчителя згідно [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
 * `certified` (bool): флажок, що вказує чи є вчитель офіційно сертифікований.
 * `isFavorite` (bool): флажок, що вказує чи оголошення є доданим до вподобаних.
+* `givenLessonsCount` (int): кількість проведених вчителем уроків.
+* [tagsCallApps](#link_tagsCallApps) (array): Перелік тегів, що визначають які платформи можуть бути використані для проведення уроку. 
+
 
 ```json
 HTTP 200
@@ -412,5 +420,13 @@ HTTP 200
 "tagsNativeLang": [ string,.. ]
 ```
 
+
+<a name="link_tagsCallApps"></a>
+## tagsCallApps
+Перелік тегів, що визначають які платформи можуть бути використані для проведення уроку. Складається з масиву рядків що можуть набувати наступних значень.
+
+```
+"zoom", "google meet", "microsoft teams", "skype" //на міті домовимось які ще
+```
 
 </details>
