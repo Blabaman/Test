@@ -19,7 +19,7 @@ HTTP 400
 
 Спроби використання запитів, що не відповідають типу користувача (наприклад запис на урок вчителем) повинні повертати код `403`
 
-Запити типу `GET` з невірним `id` повинні повертати код `404`
+Запити типу `GET` з валідним, але неіснуючим `id` повинні повертати код `404`
 
 Помилки:
 
@@ -33,6 +33,7 @@ HTTP 400
 * `user_already_exists`
 * `invalid_credentials`
 * `no_adverts_found`
+* `not_found`
 
 </details open>
 
@@ -167,7 +168,7 @@ HTTP 200
 ```json
 POST /adverts/create
 {
-    "price": 59.99,
+    "price": 299.99,
     "avalLength": [ 30, 60, 120 ],
     "avalShedule": [ "monday" : [[13, 15.5], [18, 18.5]], "thursday" : [[8, 12]] ]
     "tagsSpecialization": [ "improvement", "basics" ],
@@ -302,33 +303,71 @@ GET /adverts/advert
 * `givenLessonsCount` (int): кількість проведених вчителем уроків.
 * [tagsCallApps](#link_tagsCallApps) (array): Перелік тегів, що визначають які платформи можуть бути використані для проведення уроку. 
 
-
 ```json
 HTTP 200
 {
-    [
-        {
-            "advertId": 541,
-            "teacherName": "John Smith",
-            "tagsHobby": [ "fishing", "gardening", "board games" ],
-            "tagsSpokenLang": [ "ukrainian", "english", "german" ],
-            "tagsTeachingLang": [ "english", "german" ],
-            "tagsNativeLang": [ "ukrainian" ],
-            "shortDescription": "This is a short desctiption",
-            "rating": 4.7,
-            "profilePicture": "541.png",
-            "country": "UKR.png",
-            "certified": true,
-            "isFavorite": false
-        },..
-    ]
+    "advertId": 541,
+    "price": 299.99,
+    "avalLength": [ 30, 60, 120 ],
+    "avalShedule": [ "monday" : [[13, 15.5], [18, 18.5]], "thursday" : [[8, 12]] ]
+    "tagsSpecialization": [ "improvement", "basics" ],
+    "tagsHobby": [ "fishing", "gardening", "board games" ],
+    "tagsSpokenLang": [ "ukrainian", "english", "german" ],
+    "tagsTeachingLang": [ "english", "german" ],
+    "tagsNativeLang": [ "ukrainian" ],
+    "shortDescription": "This is a short desctiption",
+    "fullDescription": "This is a full desctiption",
+    "rating": 4.7,
+    "profilePicture": "541.png",
+    "country": "UKR.png",
+    "certified": true,
+    "isFavorite": false
+    "givenLessonsCount": 72,
+    "tagsCallApps": ["zoom", "skype"]
 }
 ```
 
 ### Помилки
 
-* `invalid_value`: Номер сторінки менший `1`.
-* `no_adverts_found`: Немає оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
+* `invalid_id`: Невалідний `id`
+* `not_found`: Оголошення з ідентифікатором `id` не існує.
+
+## SetFavorite
+
+Додавання або вилучення оголошення з вподобаних.
+
+### Параметри
+
+* `advertId`: ідентифікатор оголошення,
+* `favorite`: у який стан перевести флажок, що вказує чи оголошення є доданим до вподобаних. 
+
+### Тіло запиту
+
+```json
+POST /adverts/setFavorite
+{
+    "advertId": 451,
+    "favorite": true
+}
+```
+
+### Відповідь
+Cтан флажка, що вказує чи оголошення є доданим до вподобаних. 
+
+* `favorite`: флажок, що вказує чи оголошення є доданим до вподобаних.
+
+```json
+HTTP 200
+{
+    "favorite": true
+}
+```
+
+### Помилки
+
+* `invalid_id`: Невалідний `id`
+* `not_found`: Оголошення з ідентифікатором `id` не існує.
+* `invalid_value`: Невалідне значення `favorite`.
 
 </details>
 
