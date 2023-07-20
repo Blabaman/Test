@@ -83,7 +83,7 @@ POST /users/signup
 ```json
 HTTP 200
 {
-    //TODO
+
 }
 ```
 
@@ -116,7 +116,7 @@ POST /users/signin
 ```json
 HTTP 200
 {
-    //TODO
+    
 }
 ```
 
@@ -140,7 +140,7 @@ POST /users/signout
 ```json
 HTTP 200
 {
-    //TODO
+    
 }
 ```
 
