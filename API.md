@@ -1,7 +1,7 @@
 * [Помилки](#Помилки)
 * [Users](#Users)
   * [Signup](#Signup)
-  * [Signup](#Signin)
+  * [Signin](#Signin)
   * [Signout](#Signout)
 * [Adverts](#Adverts)
   * [Create](#Create)
