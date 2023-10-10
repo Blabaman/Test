@@ -1,13 +1,15 @@
 * [Помилки](#Помилки)
-* [Users](#Users)
+* [Auth](#Auth)
   * [Signup](#Signup)
   * [Signin](#Signin)
   * [Signout](#Signout)
 * [Adverts](#Adverts)
-  * [Create](#Create)
-  * [Page](#Page)
-  * [Advert](#Advert)
-  * [SetFavorite](#SetFavorite)
+  * [Adverts (POST)](#Adverts (POST))
+  * [Adverts (GET)](#Adverts (GET))
+  * [Adverts/id](#Adverts/id)
+* [Users](#Users)
+  * [Users (GET)](#Users (GET))
+  * [Users/id](#Users/id)
 * [Структури](#Структури)
 
 
@@ -53,7 +55,7 @@ HTTP 400
 <details open>
 <summary>
 
-# Users
+# Auth
 
 </summary>
 
@@ -70,7 +72,7 @@ HTTP 400
 ### Тіло запиту
 
 ```json
-POST /users/signup
+POST /auth/signup
 {
     "name": "John Smith",
     "email": "john.smith@gmail.com",
@@ -80,17 +82,28 @@ POST /users/signup
 
 ### Відповідь
 
-```json
-HTTP 200
-{
+* `email` (string) : Електронна пошта користувача.
+* `name` (string) : Ім'я користувача.
+* `id` (int) : Унікальний ідентифікатор користувача
+* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
+* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
 
+```json
+HTTP 201
+{
+   "user": {
+        "email": "john.smith@gmail.com",
+        "name": "John Smith",
+        "id": 10,
+        "role": "user",
+        "isDeleted": false
+    },
+    "tokens": {
+        "accessToken": "xxx",
+        "refreshToken": "yyy"
+    }
 }
 ```
-
-### Помилки
-
-* `user_already_exists`: пошта вже прив'язана до іншого користувача.
-* `invalid_value:` д.п. відсутній символ '@' у пошті.
 
 ## Signin
 
@@ -104,7 +117,7 @@ HTTP 200
 ### Тіло запиту
 
 ```json
-POST /users/signin
+POST /auth/signin
 {
     "email": "john.smith@gmail.com",
     "password": "123qwerty"
@@ -113,17 +126,28 @@ POST /users/signin
 
 #### Відповідь
 
+* `email` (string) : Електронна пошта користувача.
+* `name` (string) : Ім'я користувача.
+* `id` (int) : Унікальний ідентифікатор користувача
+* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
+* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
+
 ```json
 HTTP 200
 {
-    
+   "user": {
+        "email": "john.smith@gmail.com",
+        "name": "John Smith",
+        "id": 10,
+        "role": "user",
+        "isDeleted": false
+    },
+    "tokens": {
+        "accessToken": "xxx",
+        "refreshToken": "yyy"
+    }
 }
 ```
-
-### Помилки
-
-* `invalid_credentials`: невірний пароль або відсутній користувач з `email` поштою.
-* `invalid_value`: д.п. відсутній символ '@' у пошті.
 
 ## Signout
 
@@ -132,7 +156,7 @@ HTTP 200
 ### Тіло запиту
 
 ```json
-POST /users/signout
+POST /auth/signout
 ```
 
 ### Відповідь
@@ -144,10 +168,6 @@ HTTP 200
 }
 ```
 
-### Помилки
-
-Відсутні
-
 </details>
 
 <details open>
@@ -157,38 +177,35 @@ HTTP 200
  
 </summary>
 
-## Create
+## Adverts (POST)
 
 Створення вчителем оголошення.
 
 ### Параметри
 
 * `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* [avalLength](#link_avalLength) (array): Перелік можливих довжин уроку.
-* [avalShedule](#link_avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
-* [tagsSpecialization](#link_tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
-* [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
+* `imagePath` (string): Шлях до зображення.
+* ~~[avalLength](#link_avalLength) (array): Перелік можливих довжин уроку.~~
+* ~~[avalShedule](#link_avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.~~
+* ~~[tagsSpecialization](#link_tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.~~
+* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+* ~~[tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.~~
 * `shortDescription` (string): Короткий опис оголошення (200 символів).
-* `fullDescription` (string): Повний опис оголошення (1000 символів).
+* ~~`fullDescription` (string): Повний опис оголошення (1000 символів).~~
 
 ### Тіло запиту
 
 ```json
-POST /adverts/create
+POST /adverts
 {
-    "price": 299.99,
-    "avalLength": [ 30, 60, 120 ],
-    "avalShedule": [ "monday" : [[13, 15.5], [18, 18.5]], "thursday" : [[8, 12]] ]
-    "tagsSpecialization": [ "improvement", "basics" ],
-    "tagsHobby": [ "fishing", "gardening", "board games" ],
-    "tagsSpokenLang": [ "ukrainian", "english", "german" ],
-    "tagsTeachingLang": [ "english", "german" ],
-    "tagsNativeLang": [ "ukrainian" ],
-    "shortDescription": "This is a short desctiption",
-    "fullDescription": "This is a full desctiption"
+   "shortDescription" : "Meaningful description",
+   "price" : 10,
+   "imagePath" : "flag.jpg",
+   "hobbies" : [ {"hobby": "Програмування"}, {"hobby": "Плавання"} ],
+   "spokenLanguages":[ {"language": "Українська"}, {"language": "English"} ],
+   "teachingLanguages":[ {"language": "English"} ]
 }
 ```
 
@@ -204,79 +221,125 @@ HTTP 200
 }
 ```
 
-### Помилки
+## Adverts (GET)
 
-* `invalid_operation`: користувач вже має оголошення.
-* `invalid_value`: д.п. пустий перелік довжин уроку.
-* `invalid_tag`: використання невалідного тегу, д.п. `"cheese"` у `tagsTeachingLang`.
-* `description_too_long`: довжина опису перевищує максимальну.
-
-## Page
-
-Генерація сторінки оголошень
+Повертає усі видимі оголошення
 
 ### Параметри
 
-* `pageNum` (int): Номер сторінки. Нумераця починається з `1`.
 
 ### Тіло запиту
 
 ```json
-GET /adverts/page
+GET /adverts/
 {
-    "pageNum": 2
 }
 ```
 
 ### Відповідь
-Масив об'єктів `adverts`, що коротко описує `advertCount` оголошень.
 
-* `advertCount` (int): кількість елементів масиву `adverts`, що описують оголошення.
-* `advertId` (int): ідентифікатор оголошення.
-* `teacherName` (string): ім'я вчителя.
-* [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
-* `shortDescription` (string): Короткий опис оголошення.
-* `rating` (float): рейтинг вчителя за 5-ти бальною шкалою.
-* `profilePicture` (string): назва файлу профільного зображення. Зображення розміщене за шляхом //TODO
-* `country` (string): код країни вчителя згідно [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
-* `certified` (bool): флажок, що вказує чи вчитель є офіційно сертифікованим.
-* `isFavorite` (bool): флажок, що вказує чи оголошення є доданим до вподобаних.
+Масив елеменів, що описують оголошення, а також користувачів якому вони належать.
+
+* `id` (int): унікальний ідентифікатор оголошення.
+* `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
+* `shortDescription` (string): Короткий опис оголошення (200 символів).
+* `imagePath` (string): Шлях до зображення.
+* `createdAt` (string): Дата створення оголошення.
+* `isDeleted` (bool) : Флажок, що вказує чи оголошення є софт-видаленим.
+* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
 
 ```json
 HTTP 200
 {
-    "advertCount": 10,
-    "adverts":
-    [
-        {
-            "advertId": 541,
-            "teacherName": "John Smith",
-            "tagsHobby": [ "fishing", "gardening", "board games" ],
-            "tagsSpokenLang": [ "ukrainian", "english", "german" ],
-            "tagsTeachingLang": [ "english", "german" ],
-            "tagsNativeLang": [ "ukrainian" ],
-            "shortDescription": "This is a short desctiption",
-            "rating": 4.7,
-            "profilePicture": "541.png",
-            "country": "UKR.png",
-            "certified": true,
-            "isFavorite": false
-        },..
-    ]
+   [
+     {
+        "id": 6,
+        "price": "33.33",
+        "shortDescription": "35",
+        "imagePath": "1111",
+        "createdAt": "2023-09-09T17:24:16.830Z",
+        "isDeleted": false,
+        "user": {
+            "id": 13,
+            "email": "fam111ily@gmail.ua",
+            "name": "Lalala",
+            "role": "user",
+            "isDeleted": false
+        },
+        "hobbies": [
+            {
+                "hobby": "Шахи"
+            },
+            {
+                "hobby": "Танці"
+            },
+            {
+                "hobby": "Шоу по тв"
+            }
+        ],
+        "spokenLanguages": [],
+        "teachingLanguages": []
+    },
+    {
+        "id": 7,
+        "price": "1509.999",
+        "shortDescription": "polski jezyk тест",
+        "imagePath": "image789.jpg",
+        "createdAt": "2023-09-09T17:24:16.830Z",
+        "isDeleted": false,
+        "user": {
+            "id": 14,
+            "email": "fam11l1ily@gmail.ua",
+            "name": "Lalala",
+            "role": "user",
+            "isDeleted": false
+        },
+        "hobbies": [
+            {
+                "hobby": "Шахи"
+            },
+            {
+                "hobby": "58"
+            },
+            {
+                "hobby": "Розробка"
+            },
+            {
+                "hobby": "Вокал"
+            }
+        ],
+        "spokenLanguages": [
+            {
+                "language": "ukrainian"
+            },
+            {
+                "language": "polski"
+            },
+            {
+                "language": "english"
+            }
+        ],
+        "teachingLanguages": [
+            {
+                "language": "ukrainian"
+            },
+            {
+                "language": "polski"
+            },
+            {
+                "language": "english"
+            }
+        ]
+    }
+  ]
 }
 ```
 
-### Помилки
+## Adverts/id
 
-* `invalid_value`: Номер сторінки менший `1`.
-* `no_adverts_found`: Недостатньо оголошень для генерації сторінки. Д.п. спроба генерації сторінки `2` при розмірі сторінок `10` і загальній кількості оголошень `8`.
-
-## Advert
-
-Повний опис оголошення
+Опис оголошення з даним ідентифікатором, а також користувача якому воно належить
 
 ### Параметри
 
@@ -285,100 +348,163 @@ HTTP 200
 ### Тіло запиту
 
 ```json
-GET /adverts/advert
+GET /adverts/6
 {
-    "advertId": 541
+
 }
 ```
 
 ### Відповідь
+
 Повний опис оголошення.
 
-* `advertId` (int): ідентифікатор оголошення.
-* `teacherName` (string): ім'я вчителя.
-* `price` (float): Ціна уроку довжиною 1 годину в у.о..
-* [avalLength](#link_avalLength) (array): Перелік можливих довжин уроку.
-* [avalShedule](#link_avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.
-* [tagsSpecialization](#link_tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.
-* [tagsHobby](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [tagsSpokenLang](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [tagsTeachingLang](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* [tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.
-* `shortDescription` (string): Короткий опис оголошення.
-* `fullDescription` (string): Повний опис оголошення.
-* `rating` (float): рейтинг вчителя за 5-ти бальною шкалою.
-* `profilePicture` (string): назва файлу профільного зображення. Зображення розміщене за шляхом //TODO
-* `country` (string): код країни вчителя згідно [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
-* `certified` (bool): флажок, що вказує чи є вчитель офіційно сертифікований.
-* `isFavorite` (bool): флажок, що вказує чи оголошення є доданим до вподобаних.
-* `givenLessonsCount` (int): кількість проведених вчителем уроків.
-* [tagsCallApps](#link_tagsCallApps) (array): Перелік тегів, що визначають які платформи можуть бути використані для проведення уроку. 
+* `id` (int): унікальний ідентифікатор оголошення.
+* `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
+* `shortDescription` (string): Короткий опис оголошення (200 символів).
+* `imagePath` (string): Шлях до зображення.
+* `createdAt` (string): Дата створення оголошення.
+* `isDeleted` (bool) : Флажок, що вказує чи оголошення є софт-видаленим.
+* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
+* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
+* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
 
 ```json
 HTTP 200
 {
-    "advertId": 541,
-    "price": 299.99,
-    "avalLength": [ 30, 60, 120 ],
-    "avalShedule": [ "monday" : [[13, 15.5], [18, 18.5]], "thursday" : [[8, 12]] ]
-    "tagsSpecialization": [ "improvement", "basics" ],
-    "tagsHobby": [ "fishing", "gardening", "board games" ],
-    "tagsSpokenLang": [ "ukrainian", "english", "german" ],
-    "tagsTeachingLang": [ "english", "german" ],
-    "tagsNativeLang": [ "ukrainian" ],
-    "shortDescription": "This is a short desctiption",
-    "fullDescription": "This is a full desctiption",
-    "rating": 4.7,
-    "profilePicture": "541.png",
-    "country": "UKR.png",
-    "certified": true,
-    "isFavorite": false
-    "givenLessonsCount": 72,
-    "tagsCallApps": ["zoom", "skype"]
+    "id": 6,
+    "price": "33.33",
+    "shortDescription": "35",
+    "imagePath": "1111",
+    "createdAt": "2023-09-09T17:24:16.830Z",
+    "isDeleted": false,
+    "user": {
+        "id": 13,
+        "email": "fam111ily@gmail.ua",
+        "name": "Lalala",
+        "role": "user",
+        "isDeleted": false
+    },
+    "hobbies": [
+        {
+            "hobby": "Шахи"
+        },
+        {
+            "hobby": "Танці"
+        },
+        {
+            "hobby": "Шоу по тв"
+        }
+    ],
+    "spokenLanguages": [],
+    "teachingLanguages": []
 }
 ```
 
-### Помилки
+</details>
 
-* `invalid_id`: Невалідний `id`
-* `not_found`: Оголошення з ідентифікатором `id` не існує.
+<details open>
+<summary>
+ 
+# Users
 
-## SetFavorite
+</summary>
 
-Додавання або вилучення оголошення з вподобаних.
+## Users (GET)
+
+Повертає усіх видимих користувачів, а також їхні оголошення (якщо є).
 
 ### Параметри
-
-* `advertId`: ідентифікатор оголошення,
-* `favorite`: у який стан перевести флажок, що вказує чи оголошення є доданим до вподобаних. 
 
 ### Тіло запиту
 
 ```json
-POST /adverts/setFavorite
+GET /users
 {
-    "advertId": 451,
-    "favorite": true
+
 }
 ```
 
 ### Відповідь
-Cтан флажка, що вказує чи оголошення є доданим до вподобаних. 
 
-* `favorite`: флажок, що вказує чи оголошення є доданим до вподобаних.
+* `email` (string) : Електронна пошта користувача.
+* `name` (string) : Ім'я користувача.
+* `id` (int) : Унікальний ідентифікатор користувача
+* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
+* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
 
 ```json
 HTTP 200
+    {
+        "id": 5,
+        "email": "Dedefc@gmail.ua",
+        "name": "Lalala",
+        "role": "user",
+        "isDeleted": false,
+        "advert": {
+            "id": 4,
+            "price": "333333",
+            "shortDescription": "35",
+            "imagePath": "23",
+            "createdAt": "2023-09-09T17:24:16.830Z",
+            "isDeleted": true
+        }
+    },
+    {
+        "id": 6,
+        "email": "f@gmail.ua",
+        "name": "Lalala",
+        "role": "user",
+        "isDeleted": false,
+        "advert": null
+    },
+    {
+        "id": 32,
+        "email": "oouuttBflli@gmail.ua",
+        "name": "BBBBB",
+        "role": "user",
+        "isDeleted": false,
+        "advert": null
+    }
+```
+
+## Users/id
+
+Опис користувача з даним ідентифікатором, а також оголошення яке йому належить (якщо є)
+
+### Параметри
+
+### Тіло запиту
+
+```json
+GET /users/1
 {
-    "favorite": true
+
 }
 ```
 
-### Помилки
+### Відповідь
 
-* `invalid_id`: Невалідний `id`
-* `not_found`: Оголошення з ідентифікатором `id` не існує.
-* `invalid_value`: Невалідне значення `favorite`.
+* `email` (string) : Електронна пошта користувача.
+* `name` (string) : Ім'я користувача.
+* `id` (int) : Унікальний ідентифікатор користувача
+* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
+* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
+
+```json
+    "id": 1,
+    "email": "deddfc@gmail.ua",
+    "name": "Lalala",
+    "role": "user",
+    "isDeleted": true,
+    "advert": {
+        "id": 1,
+        "price": "33.33",
+        "shortDescription": "35",
+        "imagePath": "23",
+        "createdAt": "2023-09-09T17:24:16.830Z",
+        "isDeleted": true
+    }
+```
 
 </details>
 
