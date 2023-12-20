@@ -37,8 +37,6 @@
 
 ### Параметри
 
--
-
 ### Приклад запиту
 
 ```json
@@ -58,9 +56,9 @@ GET /languages
 HTTP 200
 [
     {
-        "id": 1,										          -- Ідентифікатор мови
-        "alpha2": "en",								     -- Назва мови згідно кодування alpha2
-        "languageEn": "English",			 -- Назва мови англійською
+        "id": 1,						-- Ідентифікатор мови
+        "alpha2": "en",					-- Назва мови згідно кодування alpha2
+        "languageEn": "English",		-- Назва мови англійською
         "languageUa": "Англійська"		-- Назва мови українською
     },
     {
@@ -74,16 +72,12 @@ HTTP 200
 
 ### Помилки
 
--
-
 <a name="link_GET_/specializations"></a>
 ## GET /specializations
 
 Отримання списку усіх існуючих спеціалізацій.
 
 ### Параметри
-
--
 
 ### Приклад запиту
 
@@ -106,7 +100,7 @@ HTTP 200
     {
         "id": 1,
         "specializationEn": "Speaking language",		-- Назва спеціалізації англійською
-        "specializationUa": "Розмовна мова"				   -- Назва спеціалізації українською
+        "specializationUa": "Розмовна мова"				-- Назва спеціалізації українською
     },
     {
         "id": 2,
@@ -118,16 +112,12 @@ HTTP 200
 
 ### Помилки
 
--
-
 <a name="link_GET_/countries"></a>
 ## GET /countries
 
 Отримання списку усіх існуючих країн.
 
 ### Параметри
-
--
 
 ### Приклад запиту
 
@@ -140,7 +130,7 @@ GET /countries
 
 ### Відповідь
 
-	
+Отримання списку усіх існуючих країн.
 
 ### Приклад відповіді
 
@@ -148,7 +138,7 @@ GET /countries
 HTTP 200
 [
     {
-        "id": 1,						   -- Ідентифікатор країни
+        "id": 1,				-- Ідентифікатор країни
         "alpha2": "UA"			-- Назва країни згідно кодування alpha2
     },
     {
@@ -160,8 +150,6 @@ HTTP 200
 
 ### Помилки
 
--
-	
 </details>
 
 
@@ -179,8 +167,6 @@ HTTP 200
 Отримання списку усіх отриманих повідомлень поточним користувачем.
 
 ### Параметри
-
--
 
 ### Приклад запиту
 
@@ -201,10 +187,10 @@ GET /users/conversations
 HTTP 200
 [
     {
-        "id": 3,																-- Ідентифікатор повідомлення
-        "message": "Test mail",											-- Зміст повідомлення
+        "id": 3,										-- Ідентифікатор повідомлення
+        "message": "Test mail",							-- Зміст повідомлення
         "writtedAt": "2023-12-11T18:46:40.458Z",		-- Дата створення повідомлення
-        "isReaded": false													-- Чи було повідомлення прочитане
+        "isReaded": false								-- Чи було повідомлення прочитане
     },
     {
         "id": 4,
@@ -246,36 +232,36 @@ GET /users/2
 ```json
 HTTP 200
 {
-    "id": 2,																				-- Ідентифікатор користувача
-    "email": "13@email.com",													-- Пошта
-    "firstName": "First Name#13,											-- Ім'я
-    "lastName": "PatchedName",												-- Призвіще
-    "role": "user",																			-- Роль (user/admin)
-    "isDeleted": true,																	-- Чи є користувач софт-делітнутим
-    "lastVisit": "2023-12-17T13:13:28.919Z",						-- Дата останнього логіну
-    "registeredAt": "2023-12-11T17:47:03.832Z",						-- Дата реєстрації
-    "rating": 2,																			-- Рейтинг	
-    "birthday": "1999-12-31T22:00:00.000Z",							-- День народження
-    "sex": "male",																			-- Стать 
-    "photoPath": null,																-- Шлях до фото користувача
-    "aboutMe": null,																-- Опис користувача
-    "advert": {																				-- Оголошення користувача
-        "id": 2,																			-- Див GET /adverts/:id
+    "id": 2,											-- Ідентифікатор користувача
+    "email": "13@email.com",							-- Пошта
+    "firstName": "First Name#13,						-- Ім'я
+    "lastName": "PatchedName",							-- Призвіще
+    "role": "user",										-- Роль (user/admin)
+    "isDeleted": true,									-- Чи є користувач софт-делітнутим
+    "lastVisit": "2023-12-17T13:13:28.919Z",			-- Дата останнього логіну
+    "registeredAt": "2023-12-11T17:47:03.832Z",			-- Дата реєстрації
+    "rating": 2,										-- Рейтинг	
+    "birthday": "1999-12-31T22:00:00.000Z",				-- День народження
+    "sex": "male",										-- Стать 
+    "photoPath": null,									-- Шлях до фото користувача
+    "aboutMe": null,									-- Опис користувача
+    "advert": {											-- Оголошення користувача
+        "id": 2,										-- Див GET /adverts/:id
         "price": "123",
         "description": "TestDesc",
-        "imagePath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702819608/liqipqbupyhmm13uvhj4.jpg",
+        "imagePath": "http://res.cloudinary.com/.../hj4.jpg",
         "createdAt": "2023-12-17T13:23:34.196Z",
         "isDeleted": false
     },
-    "feedbacksToMe": [																-- Відгуки про користувача
-        {																						
-            "id": 3,																			-- Ідентифікатор відгука
-            "mark": 2,																		-- Оцінка
-            "message": "Test Feedback",												-- Зміст відгуку
-            "createdAt": "2023-12-17T13:13:28.919Z"						-- Дата створення відгука
+    "feedbacksToMe": [									-- Відгуки про користувача
+        {																							
+            "id": 3,									-- Ідентифікатор відгука
+            "mark": 2,									-- Оцінка
+            "message": "Test Feedback",					-- Зміст відгуку
+            "createdAt": "2023-12-17T13:13:28.919Z"		-- Дата створення відгука
         }
     ],
-    "feedbacksFromMe": [															-- Відгуки, створені користувачем
+    "feedbacksFromMe": [								-- Відгуки, створені користувачем
         {
             "id": 1,
             "mark": 2,
@@ -283,16 +269,16 @@ HTTP 200
             "createdAt": "2023-12-17T13:12:36.626Z"
         }
     ],
-    "country": {																			-- Країна користувача
-        "id": 3,																				-- Див GET /countries
+    "country": {										-- Країна користувача
+        "id": 3,										-- Див GET /countries
         "alpha2": "FR"
     },
-    "favoriteAdverts": [																-- Оголошення, додані до вподобаних
-        {																						-- Див GET /adverts/:id
+    "favoriteAdverts": [								-- Оголошення, додані до вподобаних
+        {												-- Див GET /adverts/:id
             "id": 2,
             "price": "123",
             "description": "TestDesc",
-            "imagePath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702819608/liqipqbupyhmm13uvhj4.jpg",
+            "imagePath": "http://res.cloudinary.com/.../hj4.jpg",
             "createdAt": "2023-12-17T13:23:34.196Z",
             "isDeleted": false
         }
@@ -351,8 +337,6 @@ PATCH /users
 
 ### Параметри
 
--
-
 ### Приклад запиту
 PUT /users
 ```json
@@ -403,8 +387,8 @@ POST /users/2/feedback
 ```json
 HTTP 200
 {
-	"id": 4,																			-- Ідентифікатор відгука
-	"mark": 5,																		-- Оцінка
+	"id": 4,													-- Ідентифікатор відгука
+	"mark": 5,													-- Оцінка
 	"message": "Дуже класно пояснює :D",						-- Зміст відгуку
 	"createdAt": "2023-12-17T13:13:28.919Z"						-- Дата створення відгука
 }
@@ -448,9 +432,9 @@ POST /users/1/conversation
 HTTP 200
 {
     "message": "Привіт, як справи",									-- Зміст повідмлення
-    "isReaded": false,															-- Чи було повідомлення прочитане
-    "id": 9,																			-- Ідентифікатор пвідомленння
-    "writtedAt": "2023-12-17T14:08:35.763Z"					-- Дата створення повідомлення
+    "isReaded": false,												-- Чи було повідомлення прочитане
+    "id": 9,														-- Ідентифікатор пвідомленння
+    "writtedAt": "2023-12-17T14:08:35.763Z"							-- Дата створення повідомлення
 }
 ```
 
@@ -466,8 +450,6 @@ GET /users/:id/conversation
 Отримання списку усіх отриманих повідомлень даним користувачем.
 
 ### Параметри
-
--
 
 ### Приклад запиту
 
@@ -488,10 +470,10 @@ GET /users/:id/conversation
 HTTP 200
 [
     {
-        "id": 3,																-- Ідентифікатор повідомлення
+        "id": 3,														-- Ідентифікатор повідомлення
         "message": "Test mail",											-- Зміст повідомлення
-        "writtedAt": "2023-12-11T18:46:40.458Z",		-- Дата створення повідомлення
-        "isReaded": false													-- Чи було повідомлення прочитане
+        "writtedAt": "2023-12-11T18:46:40.458Z",						-- Дата створення повідомлення
+        "isReaded": false												-- Чи було повідомлення прочитане
     },
     {
         "id": 4,
@@ -576,8 +558,6 @@ POST /adverts
 
 ### Параметри
 
--
-
 ### Приклад запиту
 
 ```json
@@ -597,14 +577,14 @@ GET /adverts
 HTTP 200
 [
     {
-        "id": 2,																					-- Ідентифікатор оголошення
-        "price": "123",																			-- Ціна уроку за годину в у.о.
-        "description": "TestDesc",														-- Опис оголошення
+        "id": 2,														-- Ідентифікатор оголошення
+        "price": "123",													-- Ціна уроку за годину в у.о.
+        "description": "TestDesc",										-- Опис оголошення
         "imagePath": "http://res.cloudinary.com/.../hj4.jpg",			-- Шлях до зображення
         "createdAt": "2023-12-17T13:23:34.196Z",						-- Дата створення 
-        "isDeleted": false,																	-- Чи є софт-видалене
-        "user": {																					-- Інформація про користувача, що створив оголошення
-            "id": 2,																				-- Див GET /users
+        "isDeleted": false,												-- Чи є софт-видалене
+        "user": {														-- Інформація про користувача, що створив оголошення
+            "id": 2,													-- Див GET /users
             "email": "13@email.com",
             "firstName": "First Name#15",
             "lastName": "PatchedName",
@@ -654,7 +634,7 @@ HTTP 200
                         "rating": 5,
                         "birthday": "1999-12-31T22:00:00.000Z",
                         "sex": "male",
-                        "photoPath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702820711/wlwxbipmutsb9vqyvypn.jpg",
+                        "photoPath": "http://res.cloudinary.com/.../ypn.jpg",
                         "aboutMe": "TestDesc"
                     }
                 },
@@ -734,8 +714,8 @@ HTTP 200
                 }
             ]
         },
-        "spokenLanguages": [																-- Перелік мов, якими може проводитись урок
-            {																							-- Див GET /languages
+        "spokenLanguages": [											-- Перелік мов, якими може проводитись урок
+            {															-- Див GET /languages
                 "id": 2,
                 "alpha2": "uk",
                 "languageEn": "Ukrainian",
@@ -748,8 +728,8 @@ HTTP 200
                 "languageUa": "Французька"
             }
         ],
-        "teachingLanguages": [																-- Перелік мов, які можуть вивчатись на уроці
-            {																								-- Див GET /languages
+        "teachingLanguages": [											-- Перелік мов, які можуть вивчатись на уроці
+            {															-- Див GET /languages
                 "id": 2,
                 "alpha2": "uk",
                 "languageEn": "Ukrainian",
@@ -768,8 +748,8 @@ HTTP 200
                 "languageUa": "Польська"
             }
         ],
-        "specializations": [																	-- Перелік спеціалізацій викладача
-            {																							-- Див GET /specializations
+        "specializations": [											-- Перелік спеціалізацій викладача
+            {															-- Див GET /specializations
                 "id": 1,
                 "specializationEn": "Speaking language",
                 "specializationUa": "Розмовна мова"
@@ -861,8 +841,6 @@ PATCH /adverts/1
 Відновлення/видалення оголошення поточного користувача (якщо в софт-деліті то відновити і навпаки).
 
 ### Параметри
-
--
 
 ### Приклад запиту
 
@@ -960,7 +938,7 @@ POST /auth/signup
 HTTP 200
 {
     {
-    "user": {																							--Див. GET /users/:id
+    "user": {																--Див. GET /users/:id
         "email": "testmail@email.com",
         "firstName": "Олег",
         "lastName": null,
@@ -1023,7 +1001,7 @@ POST /auth/signin
 HTTP 200
 {
     {
-    "user": {																							--Див. GET /users/:id
+    "user": {																--Див. GET /users/:id
         "email": "testmail@email.com",
         "firstName": "Олег",
         "lastName": null,
