@@ -891,9 +891,9 @@ PATCH /admin/countries/:id
 ```json
 POST /admin/languages
 {
-    "alpha2": "JP",							-- Назва мови згідно кодування alpha2
-    "languageEn": "Japanese",		-- Назва мови англійською
-    "languageUa": "Японська"	-- Назва мови українською
+    "alpha2": "JP",				-- Назва мови згідно кодування alpha2
+    "languageEn": "Japanese",			-- Назва мови англійською
+    "languageUa": "Японська"			-- Назва мови українською
 }
 ```
 
@@ -921,7 +921,7 @@ POST /admin/languages
 ```json
 POST /admin/specializations
 {
-    "specializationEn": "For children",						-- Назва спеціалізації англійською
+    "specializationEn": "For children",		-- Назва спеціалізації англійською
     "specializationUa": "Для дітей"		-- Назва спеціалізації українською
 }
 ```
@@ -950,7 +950,7 @@ POST /admin/specializations
 ```json
 POST /admin/countries
 {
-    "alpha2": "JP"			-- Назва країни згідно кодування alpha2
+    "alpha2": "JP"				-- Назва країни згідно кодування alpha2
 }
 ```
 
