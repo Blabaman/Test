@@ -524,7 +524,7 @@ POST /adverts
     "spokenLanguages": "[ 2, 5 ]"
     "teachingLanguages": "[ 2, 3, 4 ]"
     "image": undefined
-    "updateUser": "{ "lastName" : "Name", "sex" : "male", "country" : 1, "birthday" : "2000-01-01" }"
+    "updateUser": { "lastName" : "Name", "sex" : "male", "country" : 1, "birthday" : "2000-01-01" }
     "specializations": "[ 1, 3 ]"
 }
 ```
