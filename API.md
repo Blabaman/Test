@@ -246,12 +246,12 @@ HTTP 200
     "photoPath": null,						-- Шлях до фото користувача
     "aboutMe": null,						-- Опис користувача
     "advert": {							-- Оголошення користувача
-        "id": 2,						-- Див GET /adverts/:id
-        "price": "123",
-        "description": "TestDesc",
-        "imagePath": "http://res.cloudinary.com/.../hj4.jpg",
-        "createdAt": "2023-12-17T13:23:34.196Z",
-        "isDeleted": false
+	"id": 2,						-- Див GET /adverts/:id
+    	"price": "123",
+    	"description": "TestDesc",
+    	"imagePath": "http://res.cloudinary.com/.../hj4.jpg",
+    	"createdAt": "2023-12-17T13:23:34.196Z",
+    	"isDeleted": false
     },
     "feedbacksToMe": [						-- Відгуки про користувача
         {																							
@@ -312,7 +312,7 @@ HTTP 200
 ```json
 PATCH /users
 {
-	"email" : "newMail@mail.com",
+    "email" : "newMail@mail.com",
     "firstName" : "Олег"
     "lastName" : "Олегович",
 }
@@ -387,10 +387,10 @@ POST /users/2/feedback
 ```json
 HTTP 200
 {
-	"id": 4,								-- Ідентифікатор відгука
-	"mark": 5,								-- Оцінка
-	"message": "Дуже класно пояснює :D",					-- Зміст відгуку
-	"createdAt": "2023-12-17T13:13:28.919Z"					-- Дата створення відгука
+    "id": 4,								-- Ідентифікатор відгука
+    "mark": 5,								-- Оцінка
+    "message": "Дуже класно пояснює :D",					-- Зміст відгуку
+    "createdAt": "2023-12-17T13:13:28.919Z"					-- Дата створення відгука
 }
 ```
 
@@ -519,13 +519,13 @@ HTTP 200
 ```json
 POST /adverts
 {
-    "description: "TestDesc"
-	price: "123"
-	spokenLanguages: "[ 2, 5 ]"
-	teachingLanguages: "[ 2, 3, 4 ]"
-	image: undefined
-	updateUser: "{ "lastName" : "Name", "sex" : "male", "country" : 1, "birthday" : "2000-01-01" }"
-	specializations: "[ 1, 3 ]"
+    "description": "TestDesc"
+    "price": "123"
+    "spokenLanguages": "[ 2, 5 ]"
+    "teachingLanguages": "[ 2, 3, 4 ]"
+    "image": undefined
+    "updateUser": "{ "lastName" : "Name", "sex" : "male", "country" : 1, "birthday" : "2000-01-01" }"
+    "specializations": "[ 1, 3 ]"
 }
 ```
 
@@ -584,43 +584,43 @@ HTTP 200
         "createdAt": "2023-12-17T13:23:34.196Z",				-- Дата створення 
         "isDeleted": false,							-- Чи є софт-видалене
         "user": {								-- Інформація про користувача, що створив оголошення
-            "id": 2,								-- Див GET /users
-            "email": "13@email.com",
-            "firstName": "First Name#15",
-            "lastName": "PatchedName",
-            "role": "user",
-            "isDeleted": true,
-            "lastVisit": "2023-12-17T13:23:34.201Z",
-            "registeredAt": "2023-12-11T17:47:03.832Z",
-            "rating": 2,
-            "birthday": "1999-12-31T22:00:00.000Z",
-            "sex": "male",
-            "photoPath": null,
-            "aboutMe": null,
-            "country": {
-                "id": 1,
-                "alpha2": "UA"
+        "id": 2,								-- Див GET /users
+        "email": "13@email.com",
+        "firstName": "First Name#15",
+        "lastName": "PatchedName",
+        "role": "user",
+        "isDeleted": true,
+        "lastVisit": "2023-12-17T13:23:34.201Z",
+        "registeredAt": "2023-12-11T17:47:03.832Z",
+        "rating": 2,
+        "birthday": "1999-12-31T22:00:00.000Z",
+        "sex": "male",
+        "photoPath": null,
+        "aboutMe": null,
+        "country": {
+            "id": 1,
+            "alpha2": "UA"
             },
-            "feedbacksToMe": [
-                {
-                    "id": 4,
-                    "mark": 2,
-                    "message": "Test Feedback",
-                    "createdAt": "2023-12-17T14:02:14.748Z",
-                    "toUser": {
-                        "id": 2,
-                        "email": "13@email.com",
-                        "firstName": "First Name#15",
-                        "lastName": "PatchedName",
-                        "role": "user",
-                        "isDeleted": true,
-                        "lastVisit": "2023-12-17T13:23:34.201Z",
-                        "registeredAt": "2023-12-11T17:47:03.832Z",
-                        "rating": 2,
-                        "birthday": "1999-12-31T22:00:00.000Z",
-                        "sex": "male",
-                        "photoPath": null,
-                        "aboutMe": null
+        "feedbacksToMe": [
+            {
+                "id": 4,
+                "mark": 2,
+                "message": "Test Feedback",
+                "createdAt": "2023-12-17T14:02:14.748Z",
+                "toUser": {
+                    "id": 2,
+                    "email": "13@email.com",
+                    "firstName": "First Name#15",
+                    "lastName": "PatchedName",
+                    "role": "user",
+                    "isDeleted": true,
+                    "lastVisit": "2023-12-17T13:23:34.201Z",
+                    "registeredAt": "2023-12-11T17:47:03.832Z",
+                    "rating": 2,
+                    "birthday": "1999-12-31T22:00:00.000Z",
+                    "sex": "male",
+                    "photoPath": null,
+                    "aboutMe": null
                     },
                     "fromUser": {
                         "id": 4,
