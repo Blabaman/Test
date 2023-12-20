@@ -162,8 +162,7 @@ HTTP 200
 </summary>
 
 <a name="link_GET_/users/conversations"></a>
-## GET /users/conversations -- Доступно тільки адміну
-
+## GET /users/conversations
 Отримання списку усіх отриманих повідомлень поточним користувачем.
 
 ### Параметри
@@ -405,7 +404,7 @@ HTTP 200
 * 401 - Unauthorized
 
 <a name="link_POST_/users/:id/conversation"></a>
-## GET /languages
+## POST /users/:id/conversation
 
 Надсилання повідомлення даному користувачу.
 
