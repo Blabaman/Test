@@ -234,7 +234,7 @@ HTTP 200
 {
     "id": 2,							-- Ідентифікатор користувача
     "email": "13@email.com",					-- Пошта
-    "firstName": "First Name#13,				-- Ім'я
+    "firstName": "First Name#13",				-- Ім'я
     "lastName": "PatchedName",					-- Призвіще
     "role": "user",						-- Роль (user/admin)
     "isDeleted": true,						-- Чи є користувач софт-делітнутим
