@@ -26,7 +26,7 @@
 <details open>
 <summary>
  
-#/
+# /
 
 </summary>
 
@@ -169,7 +169,7 @@ HTTP 200
 <details open>
 <summary>
  
-#/users
+# /users
 
 </summary>
 
@@ -513,7 +513,7 @@ HTTP 200
 <details open>
 <summary>
  
-#/adverts
+# /adverts
 
 </summary>
 
@@ -923,7 +923,7 @@ PUT /adverts/:id/favorite
 <details open>
 <summary>
  
-#/auth
+# /auth
 
 </summary>
 
