@@ -1,608 +1,1121 @@
-* [Помилки](#Помилки)
-* [Auth](#Auth)
-  * [Signup](#Signup)
-  * [Signin](#Signin)
-  * [Signout](#Signout)
-* [Adverts](#Adverts)
-  * [Adverts (POST)](#Adverts (POST))
-  * [Adverts (GET)](#Adverts (GET))
-  * [Adverts/id](#Adverts/id)
-* [Users](#Users)
-  * [Users (GET)](#Users (GET))
-  * [Users/id](#Users/id)
-* [Структури](#Структури)
-
-
-<details open>
-  <summary>
-          
-  # Помилки
-          
-  </summary>
-
-### Тіло відповіді
-
-```json
-HTTP 400
-{
-    "errorCode": "код_помилки_зміїним_стилем",
-    "errorMessage": "Юзер-френдлі опис помилки"
-}
-```
-
-Усі помилки валідації даних повинні повертати код `400`
-
-Спроби використання запитів, що не відповідають типу користувача (наприклад запис на урок вчителем) повинні повертати код `403`
-
-Запити типу `GET` з валідним, але неіснуючим `id` повинні повертати код `404`
-
-Помилки:
-
-* `invalid_operation`
-* `invalid_value`
-* `invalid_shedule_day`
-* `invalid_shedule_time_value`
-* `invalid_tag`
-* `invalid_id`
-* `description_too_long`
-* `user_already_exists`
-* `invalid_credentials`
-* `no_adverts_found`
-* `not_found`
-
-</details>
-
+* [/](#/)
+	* [GET /languages](#link_GET_/languages)
+	* [GET /specializations](#link_GET_/specializations)
+	* [GET /countries](#link_GET_/countries)
+* [/users](#/users)
+	* [GET /users/conversations](#link_GET_/users/conversations)
+	* [GET /users/:id](#link_GET_/users/:id)
+	* [PATCH /users](#link_PATCH_/users)
+	* [PUT /users](#link_PUT_/users)
+	* [POST /users/:id/feedback](#link_POST_/users/:id/feedback)
+	* [POST /users/:id/conversation](#link_POST_/users/:id/conversation)
+	* [GET /users/:id/conversation](#link_GET_/users/:id/conversation)
+* [/adverts](#/adverts)
+	* [POST /adverts](#link_POST_/adverts)
+	* [GET /adverts](#link_GET_/adverts)
+	* [GET /adverts/:id](#link_GET_/adverts/:id)
+	* [PATCH /adverts/:id](#link_PATCH_/adverts/:id)
+	* [PUT /adverts](#link_PUT_/adverts)
+	* [PUT /adverts/:id/favorite](#link_PUT_/adverts/:id/favorite)
+* [/auth](#/auth)
+	* [POST /auth/signup](#link_POST_/auth/signup)
+	* [POST /auth/signin](#link_POST_/auth/signin)
+	* [POST /auth/logout](#link_POST_/auth/logout)
+	* [POST /auth/refresh](#link_POST_/auth/refresh)
+	
 <details open>
 <summary>
-
-# Auth
-
-</summary>
-
-## Signup
-
-Створення нового користувача.
-
-### Параметри
-
-* `name` (string) : Ім'я користувача. Складається з ненульової кількості літер, що можуть бути розділені пробілами.
-* `email` (string) : Електронна пошта користувача. На одну пошту може бути зареєстрований тільки один користувач.
-* `password` (string) : Пароль користувача. Складається з 8-24 довільних символів.
-
-### Тіло запиту
-
-```json
-POST /auth/signup
-{
-    "name": "John Smith",
-    "email": "john.smith@gmail.com",
-    "password": "123qwerty"
-}
-```
-
-### Відповідь
-
-* `email` (string) : Електронна пошта користувача.
-* `name` (string) : Ім'я користувача.
-* `id` (int) : Унікальний ідентифікатор користувача
-* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
-* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
-
-```json
-HTTP 201
-{
-   "user": {
-        "email": "john.smith@gmail.com",
-        "name": "John Smith",
-        "id": 10,
-        "role": "user",
-        "isDeleted": false
-    },
-    "tokens": {
-        "accessToken": "xxx",
-        "refreshToken": "yyy"
-    }
-}
-```
-
-## Signin
-
-Вхід користувача до системи.
-
-### Параметри
-
-* `email` (string) : Електронна пошта користувача.
-* `password` (string) : Пароль користувача.
-
-### Тіло запиту
-
-```json
-POST /auth/signin
-{
-    "email": "john.smith@gmail.com",
-    "password": "123qwerty"
-}
-```
-
-#### Відповідь
-
-* `email` (string) : Електронна пошта користувача.
-* `name` (string) : Ім'я користувача.
-* `id` (int) : Унікальний ідентифікатор користувача
-* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
-* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
-
-```json
-HTTP 200
-{
-   "user": {
-        "email": "john.smith@gmail.com",
-        "name": "John Smith",
-        "id": 10,
-        "role": "user",
-        "isDeleted": false
-    },
-    "tokens": {
-        "accessToken": "xxx",
-        "refreshToken": "yyy"
-    }
-}
-```
-
-## Signout
-
-Вихід користувача з системи.
-
-### Тіло запиту
-
-```json
-POST /auth/signout
-```
-
-### Відповідь
-
-```json
-HTTP 200
-{
-    
-}
-```
-
-</details>
-
-<details open>
-<summary>
-
-# Adverts
  
+#/
+
 </summary>
 
-## Adverts (POST)
+<a name="link_GET_/languages"></a>
+## GET /languages
 
-Створення вчителем оголошення.
+Отримання списку усіх існуючих мов.
 
 ### Параметри
 
-* `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* `imagePath` (string): Шлях до зображення.
-* ~~[avalLength](#link_avalLength) (array): Перелік можливих довжин уроку.~~
-* ~~[avalShedule](#link_avalshedule) (array): Перелік днів та інтервалів годин, у які може бути проведений урок.~~
-* ~~[tagsSpecialization](#link_tagsspecialization) (array): Перелік тегів, що визначають спеціалізацію вчителя.~~
-* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
-* ~~[tagsNativeLang](#link_tagsnativeLang) (array): Перелік тегів, що визначають рідні мови вчителя.~~
-* `shortDescription` (string): Короткий опис оголошення (200 символів).
-* ~~`fullDescription` (string): Повний опис оголошення (1000 символів).~~
+-
 
-### Тіло запиту
+### Приклад запиту
+
+```json
+GET /languages
+{
+	
+}
+```
+
+### Відповідь
+
+Масив об'єктів, де кожен об'єкт описує окрему мову.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+[
+    {
+        "id": 1,										          -- Ідентифікатор мови
+        "alpha2": "en",								     -- Назва мови згідно кодування alpha2
+        "languageEn": "English",			 -- Назва мови англійською
+        "languageUa": "Англійська"		-- Назва мови українською
+    },
+    {
+        "id": 2,
+        "alpha2": "uk",
+        "languageEn": "Ukrainian",
+        "languageUa": "Українська"
+    }
+]
+```
+
+### Помилки
+
+-
+
+<a name="link_GET_/specializations"></a>
+## GET /specializations
+
+Отримання списку усіх існуючих спеціалізацій.
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+GET /specializations
+{
+	
+}
+```
+
+### Відповідь
+
+Масив об'єктів, де кожен об'єкт описує окрему спеціалізацію.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+[
+    {
+        "id": 1,
+        "specializationEn": "Speaking language",		-- Назва спеціалізації англійською
+        "specializationUa": "Розмовна мова"				   -- Назва спеціалізації українською
+    },
+    {
+        "id": 2,
+        "specializationEn": "Learning the basics",
+        "specializationUa": "Вивчення азів"
+    }
+]
+```
+
+### Помилки
+
+-
+
+<a name="link_GET_/countries"></a>
+## GET /countries
+
+Отримання списку усіх існуючих країн.
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+GET /countries
+{
+	
+}
+```
+
+### Відповідь
+
+	
+
+### Приклад відповіді
+
+```json
+HTTP 200
+[
+    {
+        "id": 1,						   -- Ідентифікатор країни
+        "alpha2": "UA"			-- Назва країни згідно кодування alpha2
+    },
+    {
+        "id": 2,
+        "alpha2": "GB"
+    }
+]
+```
+
+### Помилки
+
+-
+	
+</details>
+
+
+
+<details open>
+<summary>
+ 
+#/users
+
+</summary>
+
+<a name="link_GET_/users/conversations"></a>
+## GET /users/conversations -- Доступно тільки адміну
+
+Отримання списку усіх отриманих повідомлень поточним користувачем.
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+GET /users/conversations
+{
+	
+}
+```
+
+### Відповідь
+
+Масив об'єктів, де кожен об'єкт описує окреме повідомлення.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+[
+    {
+        "id": 3,																-- Ідентифікатор повідомлення
+        "message": "Test mail",											-- Зміст повідомлення
+        "writtedAt": "2023-12-11T18:46:40.458Z",		-- Дата створення повідомлення
+        "isReaded": false													-- Чи було повідомлення прочитане
+    },
+    {
+        "id": 4,
+        "message": "Test2 mail",
+        "writtedAt": "2023-12-11T18:46:41.062Z",
+        "isReaded": false
+    }
+]
+```
+
+### Помилки
+
+* 401 - Unauthorized
+
+<a name="link_GET_/users/:id"></a>
+## GET /users/:id
+
+Отримання інформації про даного користувача.
+
+### Параметри
+
+* id - ідентифікатор користувача
+
+### Приклад запиту
+
+```json
+GET /users/2
+{
+	
+}
+```
+
+### Відповідь
+
+Опис користувача.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+{
+    "id": 2,																				-- Ідентифікатор користувача
+    "email": "13@email.com",													-- Пошта
+    "firstName": "First Name#13,											-- Ім'я
+    "lastName": "PatchedName",												-- Призвіще
+    "role": "user",																			-- Роль (user/admin)
+    "isDeleted": true,																	-- Чи є користувач софт-делітнутим
+    "lastVisit": "2023-12-17T13:13:28.919Z",						-- Дата останнього логіну
+    "registeredAt": "2023-12-11T17:47:03.832Z",						-- Дата реєстрації
+    "rating": 2,																			-- Рейтинг	
+    "birthday": "1999-12-31T22:00:00.000Z",							-- День народження
+    "sex": "male",																			-- Стать 
+    "photoPath": null,																-- Шлях до фото користувача
+    "aboutMe": null,																-- Опис користувача
+    "advert": {																				-- Оголошення користувача
+        "id": 2,																			-- Див GET /adverts/:id
+        "price": "123",
+        "description": "TestDesc",
+        "imagePath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702819608/liqipqbupyhmm13uvhj4.jpg",
+        "createdAt": "2023-12-17T13:23:34.196Z",
+        "isDeleted": false
+    },
+    "feedbacksToMe": [																-- Відгуки про користувача
+        {																						
+            "id": 3,																			-- Ідентифікатор відгука
+            "mark": 2,																		-- Оцінка
+            "message": "Test Feedback",												-- Зміст відгуку
+            "createdAt": "2023-12-17T13:13:28.919Z"						-- Дата створення відгука
+        }
+    ],
+    "feedbacksFromMe": [															-- Відгуки, створені користувачем
+        {
+            "id": 1,
+            "mark": 2,
+            "message": "Test Feedback",
+            "createdAt": "2023-12-17T13:12:36.626Z"
+        }
+    ],
+    "country": {																			-- Країна користувача
+        "id": 3,																				-- Див GET /countries
+        "alpha2": "FR"
+    },
+    "favoriteAdverts": [																-- Оголошення, додані до вподобаних
+        {																						-- Див GET /adverts/:id
+            "id": 2,
+            "price": "123",
+            "description": "TestDesc",
+            "imagePath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702819608/liqipqbupyhmm13uvhj4.jpg",
+            "createdAt": "2023-12-17T13:23:34.196Z",
+            "isDeleted": false
+        }
+    ]
+}
+```
+
+### Помилки
+
+* 401 - Unauthorized
+* 400 - User with id [:id] not found
+
+<a name="link_PATCH_/users"></a>
+## PATCH /users
+
+Редагування інформації про даного користувача.
+
+### Параметри
+
+* email - Пошта
+* firstName - Ім'я
+* lastName - Призвіще
+* country - Країна
+* birthday - Дата народження
+* sex - Стать
+* aboutMe - Опис користувача
+* photo - Файл фото користувача
+
+### Приклад запиту
+
+```json
+PATCH /users
+{
+	"email" : "newMail@mail.com",
+    "firstName" : "Олег"
+    "lastName" : "Олегович",
+}
+```
+
+### Відповідь
+
+Відредагована інформація про даного користувача.
+
+### Приклад відповіді
+
+Див GET /users/:id
+
+### Помилки
+
+* 401 - Unauthorized
+
+<a name="link_PUT_/users"></a>
+## PUT /users
+
+Відновлення/видалення поточного користувача (якщо в софт-деліті то відновити і навпаки).
+
+### Параметри
+
+-
+
+### Приклад запиту
+PUT /users
+```json
+
+{
+	
+}
+```
+
+### Відповідь
+
+Відредагована інформація про даного користувача.
+
+### Приклад відповіді
+
+Див GET /users/:id
+
+### Помилки
+
+* 401 - Unauthorized
+
+<a name="link_GET_/link_POST_/users/:id/feedback"></a>
+## POST /users/:id/feedback
+
+Додавання відгука до даного користувача.
+
+### Параметри
+
+* mark - Оцінка; Обов'язкове поле; Повиина мати цілочислене значення в межах [1; 5]
+* message - Зміст відгуку; Обов'язкове поле;
+
+### Приклад запиту
+
+```json
+POST /users/2/feedback
+{
+    "mark" : 5,
+    "message" : "Дуже класно пояснює :D"
+}
+```
+
+### Відповідь
+
+Інформація про створений відгук.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+{
+	"id": 4,																			-- Ідентифікатор відгука
+	"mark": 5,																		-- Оцінка
+	"message": "Дуже класно пояснює :D",						-- Зміст відгуку
+	"createdAt": "2023-12-17T13:13:28.919Z"						-- Дата створення відгука
+}
+```
+
+### Помилки
+
+* 400 - User with id [:id] not found
+* 400 - Mark cannot exceed 5.
+* 400 - Mark must be at least 1.
+* 400 - Mark must be an integer.
+* 400 - mark should not be empty
+* 400 - message should not be empty
+* 401 - Unauthorized
+
+<a name="link_POST_/users/:id/conversation"></a>
+## GET /languages
+
+Надсилання повідомлення даному користувачу.
+
+### Параметри
+
+message - Зміст повідомлення; Обов'язкове поле;
+
+### Приклад запиту
+
+```json
+POST /users/1/conversation
+{
+    "message" : "Привіт, як справи?"
+}
+```
+
+### Відповідь
+
+Інформація про створене повідомлення.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+{
+    "message": "Привіт, як справи",									-- Зміст повідмлення
+    "isReaded": false,															-- Чи було повідомлення прочитане
+    "id": 9,																			-- Ідентифікатор пвідомленння
+    "writtedAt": "2023-12-17T14:08:35.763Z"					-- Дата створення повідомлення
+}
+```
+
+### Помилки
+
+* 400 - User with id [:id] not found
+* 400 - message should not be empty
+* 401 - Unauthorized
+
+<a name="link_GET_/users/:id/conversation"></a>
+GET /users/:id/conversation
+
+Отримання списку усіх отриманих повідомлень даним користувачем.
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+GET /users/:id/conversation
+{
+	
+}
+```
+
+### Відповідь
+
+Масив об'єктів, де кожен об'єкт описує окреме повідомлення.
+
+### Приклад відповіді
+
+```json
+HTTP 200
+[
+    {
+        "id": 3,																-- Ідентифікатор повідомлення
+        "message": "Test mail",											-- Зміст повідомлення
+        "writtedAt": "2023-12-11T18:46:40.458Z",		-- Дата створення повідомлення
+        "isReaded": false													-- Чи було повідомлення прочитане
+    },
+    {
+        "id": 4,
+        "message": "Test2 mail",
+        "writtedAt": "2023-12-11T18:46:41.062Z",
+        "isReaded": false
+    }
+]
+```
+
+### Помилки
+
+* 401 - Unauthorized
+	
+</details>
+
+
+
+<details open>
+<summary>
+ 
+#/adverts
+
+</summary>
+
+<a name="link_POST_/adverts"></a>
+## POST /adverts
+
+Створення нового оголошення.
+
+### Параметри
+
+* description - Опис оголошення; Обов'язкове поле
+* price - Ціна урока за годину в у.о.; Обов'язкове поле; Повинна бути в межах (0; 9999]
+* spokenLanguages - Перелік мов, якими може проводитись урок; Обов'язкове поле
+* teachingLanguages - Перелік мов, які можуть вивчатись на уроці; Обов'язкове поле
+* image - Фото до оголошення; Обов'язкове поле
+* updateUser - Додаткові поля користувача, напр lastName; Обов'язкове поле
+* specializations - Перелік спеціалізацій викладача; Обов'язкове поле
+
+### Приклад запиту
 
 ```json
 POST /adverts
 {
-   "shortDescription" : "Meaningful description",
-   "price" : 10,
-   "imagePath" : "flag.jpg",
-   "hobbies" : [ {"hobby": "Програмування"}, {"hobby": "Плавання"} ],
-   "spokenLanguages":[ {"language": "Українська"}, {"language": "English"} ],
-   "teachingLanguages":[ {"language": "English"} ]
+    "description: "TestDesc"
+	price: "123"
+	spokenLanguages: "[ 2, 5 ]"
+	teachingLanguages: "[ 2, 3, 4 ]"
+	image: undefined
+	updateUser: "{ "lastName" : "Name", "sex" : "male", "country" : 1, "birthday" : "2000-01-01" }"
+	specializations: "[ 1, 3 ]"
 }
 ```
 
 ### Відповідь
-Ідентифікатор створеного оголошення.
 
-* `id` (int): ідентифікатор створеного оголошення.
+Інформація про створене повідомлення.
 
-```json
-HTTP 200
-{
-    "id": 541
-}
-```
+### Приклад відповіді
 
-## Adverts (GET)
+Див. GET /adverts
 
-Повертає усі видимі оголошення
+### Помилки
+
+* 400 - description should not be empty
+* 400 - Price must be less than or equal to 9999
+* 400 - Price must be greater than 0
+* 400 - price must b	e a number conforming to the specified constraints
+* 400 - price should not be empty
+* 400 - spokenLanguages should not be empty
+* 400 - teachingLanguages should not be empty
+* 400 - specializations should not be empty
+* 401 - Unauthorized
+* 409 - User cannot have more then one advert
+* 500 - Internal server error може виникати, якщо не заповнені додаткові поля користувача, напр. "lastName", "sex", тощо.
+
+<a name="link_GET_/adverts"></a>
+## GET /adverts
+
+Отримання списку усіх оголошень.
 
 ### Параметри
 
+-
 
-### Тіло запиту
+### Приклад запиту
 
 ```json
-GET /adverts/
+GET /adverts
 {
+	
 }
 ```
 
 ### Відповідь
 
-Масив елеменів, що описують оголошення, а також користувачів якому вони належать.
+Масив об'єктів, де кожен об'єкт описує окреме оголошення.
 
-* `id` (int): унікальний ідентифікатор оголошення.
-* `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* `shortDescription` (string): Короткий опис оголошення (200 символів).
-* `imagePath` (string): Шлях до зображення.
-* `createdAt` (string): Дата створення оголошення.
-* `isDeleted` (bool) : Флажок, що вказує чи оголошення є софт-видаленим.
-* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+### Приклад відповіді
 
 ```json
 HTTP 200
-{
-   [
-     {
-        "id": 6,
-        "price": "33.33",
-        "shortDescription": "35",
-        "imagePath": "1111",
-        "createdAt": "2023-09-09T17:24:16.830Z",
-        "isDeleted": false,
-        "user": {
-            "id": 13,
-            "email": "fam111ily@gmail.ua",
-            "name": "Lalala",
-            "role": "user",
-            "isDeleted": false
-        },
-        "hobbies": [
-            {
-                "hobby": "Шахи"
-            },
-            {
-                "hobby": "Танці"
-            },
-            {
-                "hobby": "Шоу по тв"
-            }
-        ],
-        "spokenLanguages": [],
-        "teachingLanguages": []
-    },
+[
     {
-        "id": 7,
-        "price": "1509.999",
-        "shortDescription": "polski jezyk тест",
-        "imagePath": "image789.jpg",
-        "createdAt": "2023-09-09T17:24:16.830Z",
-        "isDeleted": false,
-        "user": {
-            "id": 14,
-            "email": "fam11l1ily@gmail.ua",
-            "name": "Lalala",
+        "id": 2,																					-- Ідентифікатор оголошення
+        "price": "123",																			-- Ціна уроку за годину в у.о.
+        "description": "TestDesc",														-- Опис оголошення
+        "imagePath": "http://res.cloudinary.com/.../hj4.jpg",			-- Шлях до зображення
+        "createdAt": "2023-12-17T13:23:34.196Z",						-- Дата створення 
+        "isDeleted": false,																	-- Чи є софт-видалене
+        "user": {																					-- Інформація про користувача, що створив оголошення
+            "id": 2,																				-- Див GET /users
+            "email": "13@email.com",
+            "firstName": "First Name#15",
+            "lastName": "PatchedName",
             "role": "user",
-            "isDeleted": false
+            "isDeleted": true,
+            "lastVisit": "2023-12-17T13:23:34.201Z",
+            "registeredAt": "2023-12-11T17:47:03.832Z",
+            "rating": 2,
+            "birthday": "1999-12-31T22:00:00.000Z",
+            "sex": "male",
+            "photoPath": null,
+            "aboutMe": null,
+            "country": {
+                "id": 1,
+                "alpha2": "UA"
+            },
+            "feedbacksToMe": [
+                {
+                    "id": 4,
+                    "mark": 2,
+                    "message": "Test Feedback",
+                    "createdAt": "2023-12-17T14:02:14.748Z",
+                    "toUser": {
+                        "id": 2,
+                        "email": "13@email.com",
+                        "firstName": "First Name#15",
+                        "lastName": "PatchedName",
+                        "role": "user",
+                        "isDeleted": true,
+                        "lastVisit": "2023-12-17T13:23:34.201Z",
+                        "registeredAt": "2023-12-11T17:47:03.832Z",
+                        "rating": 2,
+                        "birthday": "1999-12-31T22:00:00.000Z",
+                        "sex": "male",
+                        "photoPath": null,
+                        "aboutMe": null
+                    },
+                    "fromUser": {
+                        "id": 4,
+                        "email": "15@email.com",
+                        "firstName": "\"First Name#16\"",
+                        "lastName": "PatchedName",
+                        "role": "user",
+                        "isDeleted": false,
+                        "lastVisit": "2023-12-17T14:14:21.514Z",
+                        "registeredAt": "2023-12-11T17:47:05.504Z",
+                        "rating": 5,
+                        "birthday": "1999-12-31T22:00:00.000Z",
+                        "sex": "male",
+                        "photoPath": "http://res.cloudinary.com/dvcfur1ol/image/upload/v1702820711/wlwxbipmutsb9vqyvypn.jpg",
+                        "aboutMe": "TestDesc"
+                    }
+                },
+                {
+                    "id": 3,
+                    "mark": 2,
+                    "message": "Test Feedback",
+                    "createdAt": "2023-12-17T13:13:28.919Z",
+                    "toUser": {
+                        "id": 2,
+                        "email": "13@email.com",
+                        "firstName": "First Name#15",
+                        "lastName": "PatchedName",
+                        "role": "user",
+                        "isDeleted": true,
+                        "lastVisit": "2023-12-17T13:23:34.201Z",
+                        "registeredAt": "2023-12-11T17:47:03.832Z",
+                        "rating": 2,
+                        "birthday": "1999-12-31T22:00:00.000Z",
+                        "sex": "male",
+                        "photoPath": null,
+                        "aboutMe": null
+                    },
+                    "fromUser": {
+                        "id": 3,
+                        "email": "14@email.com",
+                        "firstName": "First Name#14",
+                        "lastName": "Last Name#14",
+                        "role": "user",
+                        "isDeleted": false,
+                        "lastVisit": "2023-12-17T13:13:28.917Z",
+                        "registeredAt": "2023-12-11T17:47:04.603Z",
+                        "rating": 5,
+                        "birthday": null,
+                        "sex": null,
+                        "photoPath": null,
+                        "aboutMe": null
+                    }
+                }
+            ],
+            "feedbacksFromMe": [
+                {
+                    "id": 1,
+                    "mark": 2,
+                    "message": "Test Feedback",
+                    "createdAt": "2023-12-17T13:12:36.626Z",
+                    "toUser": {
+                        "id": 1,
+                        "email": "admin@email.com",
+                        "firstName": "ADMIN",
+                        "lastName": null,
+                        "role": "admin",
+                        "isDeleted": false,
+                        "lastVisit": "2023-12-17T13:13:10.944Z",
+                        "registeredAt": "2023-12-11T17:46:59.772Z",
+                        "rating": 2,
+                        "birthday": null,
+                        "sex": null,
+                        "photoPath": null,
+                        "aboutMe": null
+                    },
+                    "fromUser": {
+                        "id": 2,
+                        "email": "13@email.com",
+                        "firstName": "First Name#15",
+                        "lastName": "PatchedName",
+                        "role": "user",
+                        "isDeleted": true,
+                        "lastVisit": "2023-12-17T13:23:34.201Z",
+                        "registeredAt": "2023-12-11T17:47:03.832Z",
+                        "rating": 2,
+                        "birthday": "1999-12-31T22:00:00.000Z",
+                        "sex": "male",
+                        "photoPath": null,
+                        "aboutMe": null
+                    }
+                }
+            ]
         },
-        "hobbies": [
-            {
-                "hobby": "Шахи"
+        "spokenLanguages": [																-- Перелік мов, якими може проводитись урок
+            {																							-- Див GET /languages
+                "id": 2,
+                "alpha2": "uk",
+                "languageEn": "Ukrainian",
+                "languageUa": "Українська"
             },
             {
-                "hobby": "58"
-            },
-            {
-                "hobby": "Розробка"
-            },
-            {
-                "hobby": "Вокал"
+                "id": 5,
+                "alpha2": "fr",
+                "languageEn": "French",
+                "languageUa": "Французька"
             }
         ],
-        "spokenLanguages": [
-            {
-                "language": "ukrainian"
+        "teachingLanguages": [																-- Перелік мов, які можуть вивчатись на уроці
+            {																								-- Див GET /languages
+                "id": 2,
+                "alpha2": "uk",
+                "languageEn": "Ukrainian",
+                "languageUa": "Українська"
             },
             {
-                "language": "polski"
+                "id": 3,
+                "alpha2": "de",
+                "languageEn": "German",
+                "languageUa": "Німецька"
             },
             {
-                "language": "english"
+                "id": 4,
+                "alpha2": "pl",
+                "languageEn": "Polish",
+                "languageUa": "Польська"
             }
         ],
-        "teachingLanguages": [
-            {
-                "language": "ukrainian"
+        "specializations": [																	-- Перелік спеціалізацій викладача
+            {																							-- Див GET /specializations
+                "id": 1,
+                "specializationEn": "Speaking language",
+                "specializationUa": "Розмовна мова"
             },
             {
-                "language": "polski"
-            },
-            {
-                "language": "english"
+                "id": 3,
+                "specializationEn": "For children",
+                "specializationUa": "Для дітей"
             }
         ]
     }
-  ]
-}
+]
 ```
 
-## Adverts/id
+### Помилки
 
-Опис оголошення з даним ідентифікатором, а також користувача якому воно належить
+* 401 - Unauthorized
+
+<a name="link_GET_/adverts/:id"></a>
+## GET /adverts/:id
+
+Отримання інформації про дане оголошення.
 
 ### Параметри
 
-* `advertId` (int): ідентифікатор оголошення.
+* id - ідентифікатор оголошення
 
-### Тіло запиту
+### Приклад запиту
 
 ```json
-GET /adverts/6
+GET /adverts/1
 {
-
+	
 }
 ```
 
 ### Відповідь
 
-Повний опис оголошення.
+Інформація про дане оголошення.
 
-* `id` (int): унікальний ідентифікатор оголошення.
-* `price` (float): Ціна уроку довжиною 1 годину в у.о.. Повинна бути більшою за 0.
-* `shortDescription` (string): Короткий опис оголошення (200 символів).
-* `imagePath` (string): Шлях до зображення.
-* `createdAt` (string): Дата створення оголошення.
-* `isDeleted` (bool) : Флажок, що вказує чи оголошення є софт-видаленим.
-* [hobbies](#link_tagsHobby) (array): Перелік тегів, що визначають хобі вчителя.
-* [spokenLanguages](#link_tagsspokenLang) (array): Перелік тегів, що визначають мови, якими вчитель розмовляє.
-* [teachingLanguages](#link_tagsteachingLang) (array): Перелік тегів, що визначають мови, які вчитель викладає.
+### Приклад відповіді
+
+Див. GET /adverts
+
+### Помилки
+
+* 400 - Advert with id [:id] not found
+* 401 - Unauthorized
+
+<a name="link_PATCH_/adverts/:id"></a>
+## PATCH /adverts/:id
+
+Редагування інформації про дане оголошення.
+
+### Параметри
+
+* id - Ідентифікатор оголошення
+* image - Картинка оголошення
+* price - Ціна урока за годину в у.о.
+* specializations - Перелік спеціалізацій викладача
+* spokenLanguages - Перелік мов, якими може проводитись урок
+* teachingLanguages - Перелік мов, які можуть вивчатись на уроці
+
+### Приклад запиту
 
 ```json
-HTTP 200
+PATCH /adverts/1
 {
-    "id": 6,
-    "price": "33.33",
-    "shortDescription": "35",
-    "imagePath": "1111",
-    "createdAt": "2023-09-09T17:24:16.830Z",
-    "isDeleted": false,
-    "user": {
-        "id": 13,
-        "email": "fam111ily@gmail.ua",
-        "name": "Lalala",
-        "role": "user",
-        "isDeleted": false
-    },
-    "hobbies": [
-        {
-            "hobby": "Шахи"
-        },
-        {
-            "hobby": "Танці"
-        },
-        {
-            "hobby": "Шоу по тв"
-        }
-    ],
-    "spokenLanguages": [],
-    "teachingLanguages": []
+   "price" : 321
 }
 ```
 
+### Відповідь
+
+Відредагована інформація про дане оголошення.
+
+### Приклад відповіді
+
+Див. GET /adverts
+
+### Помилки
+
+* 400 - Advert with id [:id] not found
+* 401 - Unauthorized
+
+<a name="link_PUT_/adverts"></a>
+## PUT /adverts
+
+Відновлення/видалення оголошення поточного користувача (якщо в софт-деліті то відновити і навпаки).
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+PUT /adverts
+{
+	
+}
+```
+
+### Відповідь
+
+Відредагована інформація про дане оголошення.
+
+### Приклад відповіді
+
+Див GET /adverts
+
+### Помилки
+
+* 401 - Unauthorized
+
+<a name="link_PUT_/adverts/:id/favorite"></a>
+## PUT /adverts/:id/favorite
+
+Додавання оголошення до вподобаних.
+
+### Параметри
+
+* id - Ідентифікатор оголошення
+
+### Приклад запиту
+
+```json
+PUT /adverts/:id/favorite
+{
+	
+}
+```
+
+### Відповідь
+
+Інформація про дане оголошення.
+
+### Приклад відповіді
+
+Див GET /adverts
+
+### Помилки
+
+* 400 - Advert with id [:id] not found
+* 401 - Unauthorized
+	
 </details>
+
+
 
 <details open>
 <summary>
  
-# Users
+#/auth
 
 </summary>
 
-## Users (GET)
+<a name="link_POST_/auth/signup"></a>
+## POST /auth/signup
 
-Повертає усіх видимих користувачів, а також їхні оголошення (якщо є).
+Реєстрація нового користувача.
 
 ### Параметри
 
-### Тіло запиту
+* email - Пошта; Обов'язкове поле; Не може повторюватись між користувача
+* password - Пароль; Обов'язкове поле; Розмір [6; 16] символів, повинен містити хоча б одну велику літеру та цифру
+* firstName - Ім'я; Обов'язкове поле; Розмір [2; 20] символів
+* lastName - Призвіще
+
+### Приклад запиту
 
 ```json
-GET /users
+POST /auth/signup
 {
-
+    "email" : "testmail@email.com",
+    "password" : "...",
+    "firstName" : "Олег"
 }
 ```
 
 ### Відповідь
 
-* `email` (string) : Електронна пошта користувача.
-* `name` (string) : Ім'я користувача.
-* `id` (int) : Унікальний ідентифікатор користувача
-* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
-* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
+Інформація про створеного користувача та OAuth2.0 токени.
+
+### Приклад відповіді
 
 ```json
 HTTP 200
+{
     {
-        "id": 5,
-        "email": "Dedefc@gmail.ua",
-        "name": "Lalala",
+    "user": {																							--Див. GET /users/:id
+        "email": "testmail@email.com",
+        "firstName": "Олег",
+        "lastName": null,
+        "birthday": null,
+        "sex": null,
+        "photoPath": null,
+        "aboutMe": null,
+        "id": 7,
         "role": "user",
         "isDeleted": false,
-        "advert": {
-            "id": 4,
-            "price": "333333",
-            "shortDescription": "35",
-            "imagePath": "23",
-            "createdAt": "2023-09-09T17:24:16.830Z",
-            "isDeleted": true
-        }
+        "lastVisit": "2023-12-17T14:56:43.279Z",
+        "registeredAt": "2023-12-17T14:56:43.279Z",
+        "rating": 5
     },
-    {
-        "id": 6,
-        "email": "f@gmail.ua",
-        "name": "Lalala",
-        "role": "user",
-        "isDeleted": false,
-        "advert": null
-    },
-    {
-        "id": 32,
-        "email": "oouuttBflli@gmail.ua",
-        "name": "BBBBB",
-        "role": "user",
-        "isDeleted": false,
-        "advert": null
+    "tokens": {	
+        "accessToken": "...",
+        "refreshToken": "..."
     }
+}
 ```
 
-## Users/id
+### Помилки
 
-Опис користувача з даним ідентифікатором, а також оголошення яке йому належить (якщо є)
+* 400 - Email [email] has an invalid format
+* 400 - email should not be empty
+* 400 - email must be an email
+* 400 - Password must have at least 6 and at most 16 characters, including at least one uppercase letter and one digit
+* 400 - password should not be empty
+* 400 - Name must have at least 2 and at most 20 characters
+* 400 - firstName should not be empty
+* 409 - User with email [email] already exists
+
+<a name="link_POST_/auth/signin"></a>
+## POST /auth/signin
+
+Вхід користувача.
 
 ### Параметри
 
-### Тіло запиту
+* email - Пошта; Обов'язкове поле
+* password - Пароль; Обов'язкове поле
+
+### Приклад запиту
 
 ```json
-GET /users/1
+POST /auth/signin
 {
-
+    "email" : "testmail@email.com",
+    "password" : "..."
 }
 ```
 
 ### Відповідь
 
-* `email` (string) : Електронна пошта користувача.
-* `name` (string) : Ім'я користувача.
-* `id` (int) : Унікальний ідентифікатор користувача
-* `role` (string) : Роль користувача. Може мати значення **user** або **admin**
-* `isDeleted` (bool) : Флажок, що вказує чи користувач є софт-видаленим.
+Інформація про залогіненого користувача та OAuth2.0 токени.
+
+### Приклад відповіді
 
 ```json
-    "id": 1,
-    "email": "deddfc@gmail.ua",
-    "name": "Lalala",
-    "role": "user",
-    "isDeleted": true,
-    "advert": {
-        "id": 1,
-        "price": "33.33",
-        "shortDescription": "35",
-        "imagePath": "23",
-        "createdAt": "2023-09-09T17:24:16.830Z",
-        "isDeleted": true
+HTTP 200
+{
+    {
+    "user": {																							--Див. GET /users/:id
+        "email": "testmail@email.com",
+        "firstName": "Олег",
+        "lastName": null,
+        "birthday": null,
+        "sex": null,
+        "photoPath": null,
+        "aboutMe": null,
+        "id": 7,
+        "role": "user",
+        "isDeleted": false,
+        "lastVisit": "2023-12-17T14:56:43.279Z",
+        "registeredAt": "2023-12-17T14:56:43.279Z",
+        "rating": 5
+    },
+    "tokens": {	
+        "accessToken": "...",
+        "refreshToken": "..."
     }
+}
 ```
 
-</details>
+### Помилки
 
-<details open>
-<summary>
+* 400 - email should not be empty
+* 400 - email must be an email
+* 400 - password should not be empty
+* 403 - Access denied
 
-# Структури
+<a name="link_POST_/auth/logout"></a>
+## POST /auth/logout
 
-</summary>
+TODO
 
-<a name="link_avalLength"></a>
-## avalLength
-Перелік можливих довжин уроку. Складається з масиву цілих чисел `int`, що вказують на довжину урока в хвилинах.
-`int` повинен бути рівним одному з наступних чисел: `30, 60, 90, 120`.\
-Масив не може бути пустим.
+### Параметри
 
-```
-"avalLength": [ int,.. ]
-```
+-
 
-<a name="link_avalShedule"></a>
-## avalShedule
-Перелік днів та інтервалів годин, у які може бути проведений урок. Складається з іменованого масиву типу `day: [intervals]`,
-де `day` є назвою дня англійською у нижньому регістрі, `[intervals]` є двовимірним масивом розміром `[n, 2]`, і позначає інтервали,
-у які може бути проведений урок. Значення інтервалу повинні належати `[0, 24]` та можуть мати дробову частину `.5` для позначення 30 хвилин.\
-Масив не може бути пустим.
+### Приклад запиту
 
-```
-"avalShedule": [ string: [ [float, float],.. ],.. ]
+```json
+
+{
+	
+}
 ```
 
-<a name="link_tagsSpecialization"></a>
-## tagsSpecialization
-Перелік тегів, що визначають спеціалізацію вчителя. Складається з масиву рядків що можуть набувати наступних значень.
+### Відповідь
+
+	
+
+### Приклад відповіді
+
+```json
+HTTP 200
 
 ```
-"for business", "basics", "for_children", "improvement" //на міті домовимось які ще
+
+### Помилки
+
+-
+
+<a name="link_POST_/auth/refresh"></a>
+## POST /auth/refresh
+
+TODO
+
+### Параметри
+
+-
+
+### Приклад запиту
+
+```json
+
+{
+	
+}
 ```
 
-Масив не може бути пустим.
+### Відповідь
+
+	
+
+### Приклад відповіді
+
+```json
+HTTP 200
 
 ```
-"tagsSpecialization": [ string,.. ]
-```
 
-<a name="link_tagsHobby"></a>
-## tagsHobby
-Перелік тегів, що визначають хобі вчителя. Складається з масиву рядків що можуть набувати наступних значень.
+### Помилки
 
-```
-"reading", "martial_arts", "woodworking", "gardening", "video_games", "fishing yoga", "traveling", "golf", "watching_sports", "board games", "writing", "running", "tennis", "volunteer work", "dancing", "painting", "cooking", "cycling", "movie watching", "podcasts", "television", "music"
-```
-
-Масив не може бути пустим.
-
-```
-"tagsHobby": [ string,.. ]
-```
-
-<a name="link_tagsSpokenLang"></a>
-## tagsSpokenLang
-Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати наступних значень.
-
-```
-"albanian", "arabic", "armenian", "azerbaijani", "belarusian", "bulgarian", "chinese", "croatian", "czech", "danish", "dutch", "english", "estonian", "finnish", "french", "georgian", "german", "greek", "hungarian", "indian", "indonesian", "japanese", "korean", "latvian", "lithuanian", "macedonian", "malaysian", "mandarin", "moldovan", "mongolian", "norwegian", "pakistani", "polish", "portuguese", "romanian", "russian", "serbian", "slovak", "slovenian", "somali", "spanish", "swedish", "taiwanese", "turkish", "ukrainian", "uzbek", "vietnamese", "welsh"
-```
-
-Масив не може бути пустим.
-
-```
-"tagsSpokenLang": [ string,.. ]
-```
-
-<a name="link_tagsTeachingLang"></a>
-## tagsTeachingLang
-Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#link_agsspokenLang) .\
-Масив не може бути пустим.
-
-```
-"tagsTeachingLang": [ string,.. ]
-```
-
-<a name="link_tagsNativeLang"></a>
-## tagsNativeLang
-Перелік тегів, що визначають мови, якими вчитель розмовляє. Складається з масиву рядків що можуть набувати [наступних значень](#link_tagsspokenLang) .\
-Масив не може бути пустим.
-
-```
-"tagsNativeLang": [ string,.. ]
-```
-
-
-<a name="link_tagsCallApps"></a>
-## tagsCallApps
-Перелік тегів, що визначають які платформи можуть бути використані для проведення уроку. Складається з масиву рядків що можуть набувати наступних значень.
-
-```
-"zoom", "google meet", "microsoft teams", "skype" //на міті домовимось які ще
-```
-
+-
+	
 </details>
