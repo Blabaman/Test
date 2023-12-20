@@ -56,10 +56,10 @@ GET /languages
 HTTP 200
 [
     {
-        "id": 1,						-- Ідентифікатор мови
+        "id": 1,					-- Ідентифікатор мови
         "alpha2": "en",					-- Назва мови згідно кодування alpha2
-        "languageEn": "English",		-- Назва мови англійською
-        "languageUa": "Англійська"		-- Назва мови українською
+        "languageEn": "English",			-- Назва мови англійською
+        "languageUa": "Англійська"			-- Назва мови українською
     },
     {
         "id": 2,
@@ -100,7 +100,7 @@ HTTP 200
     {
         "id": 1,
         "specializationEn": "Speaking language",		-- Назва спеціалізації англійською
-        "specializationUa": "Розмовна мова"				-- Назва спеціалізації українською
+        "specializationUa": "Розмовна мова"			-- Назва спеціалізації українською
     },
     {
         "id": 2,
@@ -139,7 +139,7 @@ HTTP 200
 [
     {
         "id": 1,				-- Ідентифікатор країни
-        "alpha2": "UA"			-- Назва країни згідно кодування alpha2
+        "alpha2": "UA"				-- Назва країни згідно кодування alpha2
     },
     {
         "id": 2,
@@ -187,10 +187,10 @@ GET /users/conversations
 HTTP 200
 [
     {
-        "id": 3,										-- Ідентифікатор повідомлення
-        "message": "Test mail",							-- Зміст повідомлення
+        "id": 3,						-- Ідентифікатор повідомлення
+        "message": "Test mail",					-- Зміст повідомлення
         "writtedAt": "2023-12-11T18:46:40.458Z",		-- Дата створення повідомлення
-        "isReaded": false								-- Чи було повідомлення прочитане
+        "isReaded": false					-- Чи було повідомлення прочитане
     },
     {
         "id": 4,
@@ -232,36 +232,36 @@ GET /users/2
 ```json
 HTTP 200
 {
-    "id": 2,											-- Ідентифікатор користувача
-    "email": "13@email.com",							-- Пошта
-    "firstName": "First Name#13,						-- Ім'я
-    "lastName": "PatchedName",							-- Призвіще
-    "role": "user",										-- Роль (user/admin)
-    "isDeleted": true,									-- Чи є користувач софт-делітнутим
+    "id": 2,							-- Ідентифікатор користувача
+    "email": "13@email.com",					-- Пошта
+    "firstName": "First Name#13,				-- Ім'я
+    "lastName": "PatchedName",					-- Призвіще
+    "role": "user",						-- Роль (user/admin)
+    "isDeleted": true,						-- Чи є користувач софт-делітнутим
     "lastVisit": "2023-12-17T13:13:28.919Z",			-- Дата останнього логіну
     "registeredAt": "2023-12-11T17:47:03.832Z",			-- Дата реєстрації
-    "rating": 2,										-- Рейтинг	
-    "birthday": "1999-12-31T22:00:00.000Z",				-- День народження
-    "sex": "male",										-- Стать 
-    "photoPath": null,									-- Шлях до фото користувача
-    "aboutMe": null,									-- Опис користувача
-    "advert": {											-- Оголошення користувача
-        "id": 2,										-- Див GET /adverts/:id
+    "rating": 2,						-- Рейтинг	
+    "birthday": "1999-12-31T22:00:00.000Z",			-- День народження
+    "sex": "male",						-- Стать 
+    "photoPath": null,						-- Шлях до фото користувача
+    "aboutMe": null,						-- Опис користувача
+    "advert": {							-- Оголошення користувача
+        "id": 2,						-- Див GET /adverts/:id
         "price": "123",
         "description": "TestDesc",
         "imagePath": "http://res.cloudinary.com/.../hj4.jpg",
         "createdAt": "2023-12-17T13:23:34.196Z",
         "isDeleted": false
     },
-    "feedbacksToMe": [									-- Відгуки про користувача
+    "feedbacksToMe": [						-- Відгуки про користувача
         {																							
-            "id": 3,									-- Ідентифікатор відгука
-            "mark": 2,									-- Оцінка
-            "message": "Test Feedback",					-- Зміст відгуку
+            "id": 3,						-- Ідентифікатор відгука
+            "mark": 2,						-- Оцінка
+            "message": "Test Feedback",				-- Зміст відгуку
             "createdAt": "2023-12-17T13:13:28.919Z"		-- Дата створення відгука
         }
     ],
-    "feedbacksFromMe": [								-- Відгуки, створені користувачем
+    "feedbacksFromMe": [					-- Відгуки, створені користувачем
         {
             "id": 1,
             "mark": 2,
@@ -269,12 +269,12 @@ HTTP 200
             "createdAt": "2023-12-17T13:12:36.626Z"
         }
     ],
-    "country": {										-- Країна користувача
-        "id": 3,										-- Див GET /countries
+    "country": {						-- Країна користувача
+        "id": 3,						-- Див GET /countries
         "alpha2": "FR"
     },
-    "favoriteAdverts": [								-- Оголошення, додані до вподобаних
-        {												-- Див GET /adverts/:id
+    "favoriteAdverts": [					-- Оголошення, додані до вподобаних
+        {							-- Див GET /adverts/:id
             "id": 2,
             "price": "123",
             "description": "TestDesc",
