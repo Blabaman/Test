@@ -387,10 +387,10 @@ POST /users/2/feedback
 ```json
 HTTP 200
 {
-	"id": 4,													-- Ідентифікатор відгука
-	"mark": 5,													-- Оцінка
-	"message": "Дуже класно пояснює :D",						-- Зміст відгуку
-	"createdAt": "2023-12-17T13:13:28.919Z"						-- Дата створення відгука
+	"id": 4,								-- Ідентифікатор відгука
+	"mark": 5,								-- Оцінка
+	"message": "Дуже класно пояснює :D",					-- Зміст відгуку
+	"createdAt": "2023-12-17T13:13:28.919Z"					-- Дата створення відгука
 }
 ```
 
@@ -431,10 +431,10 @@ POST /users/1/conversation
 ```json
 HTTP 200
 {
-    "message": "Привіт, як справи",									-- Зміст повідмлення
-    "isReaded": false,												-- Чи було повідомлення прочитане
-    "id": 9,														-- Ідентифікатор пвідомленння
-    "writtedAt": "2023-12-17T14:08:35.763Z"							-- Дата створення повідомлення
+    "message": "Привіт, як справи",						-- Зміст повідмлення
+    "isReaded": false,								-- Чи було повідомлення прочитане
+    "id": 9,									-- Ідентифікатор пвідомленння
+    "writtedAt": "2023-12-17T14:08:35.763Z"					-- Дата створення повідомлення
 }
 ```
 
@@ -470,10 +470,10 @@ GET /users/:id/conversation
 HTTP 200
 [
     {
-        "id": 3,														-- Ідентифікатор повідомлення
-        "message": "Test mail",											-- Зміст повідомлення
-        "writtedAt": "2023-12-11T18:46:40.458Z",						-- Дата створення повідомлення
-        "isReaded": false												-- Чи було повідомлення прочитане
+        "id": 3,								-- Ідентифікатор повідомлення
+        "message": "Test mail",							-- Зміст повідомлення
+        "writtedAt": "2023-12-11T18:46:40.458Z",				-- Дата створення повідомлення
+        "isReaded": false							-- Чи було повідомлення прочитане
     },
     {
         "id": 4,
@@ -577,14 +577,14 @@ GET /adverts
 HTTP 200
 [
     {
-        "id": 2,														-- Ідентифікатор оголошення
-        "price": "123",													-- Ціна уроку за годину в у.о.
-        "description": "TestDesc",										-- Опис оголошення
+        "id": 2,								-- Ідентифікатор оголошення
+        "price": "123",								-- Ціна уроку за годину в у.о.
+        "description": "TestDesc",						-- Опис оголошення
         "imagePath": "http://res.cloudinary.com/.../hj4.jpg",			-- Шлях до зображення
-        "createdAt": "2023-12-17T13:23:34.196Z",						-- Дата створення 
-        "isDeleted": false,												-- Чи є софт-видалене
-        "user": {														-- Інформація про користувача, що створив оголошення
-            "id": 2,													-- Див GET /users
+        "createdAt": "2023-12-17T13:23:34.196Z",				-- Дата створення 
+        "isDeleted": false,							-- Чи є софт-видалене
+        "user": {								-- Інформація про користувача, що створив оголошення
+            "id": 2,								-- Див GET /users
             "email": "13@email.com",
             "firstName": "First Name#15",
             "lastName": "PatchedName",
@@ -714,8 +714,8 @@ HTTP 200
                 }
             ]
         },
-        "spokenLanguages": [											-- Перелік мов, якими може проводитись урок
-            {															-- Див GET /languages
+        "spokenLanguages": [							-- Перелік мов, якими може проводитись урок
+            {									-- Див GET /languages
                 "id": 2,
                 "alpha2": "uk",
                 "languageEn": "Ukrainian",
@@ -728,8 +728,8 @@ HTTP 200
                 "languageUa": "Французька"
             }
         ],
-        "teachingLanguages": [											-- Перелік мов, які можуть вивчатись на уроці
-            {															-- Див GET /languages
+        "teachingLanguages": [							-- Перелік мов, які можуть вивчатись на уроці
+            {									-- Див GET /languages
                 "id": 2,
                 "alpha2": "uk",
                 "languageEn": "Ukrainian",
@@ -748,8 +748,8 @@ HTTP 200
                 "languageUa": "Польська"
             }
         ],
-        "specializations": [											-- Перелік спеціалізацій викладача
-            {															-- Див GET /specializations
+        "specializations": [							-- Перелік спеціалізацій викладача
+            {									-- Див GET /specializations
                 "id": 1,
                 "specializationEn": "Speaking language",
                 "specializationUa": "Розмовна мова"
@@ -938,7 +938,7 @@ POST /auth/signup
 HTTP 200
 {
     {
-    "user": {																--Див. GET /users/:id
+    "user": {									--Див. GET /users/:id
         "email": "testmail@email.com",
         "firstName": "Олег",
         "lastName": null,
@@ -1001,7 +1001,7 @@ POST /auth/signin
 HTTP 200
 {
     {
-    "user": {																--Див. GET /users/:id
+    "user": {									--Див. GET /users/:id
         "email": "testmail@email.com",
         "firstName": "Олег",
         "lastName": null,
