@@ -22,7 +22,7 @@
 <details open>
 <summary>
  
-#/admin
+# /admin
 
 </summary>
 
@@ -749,9 +749,10 @@ PUT /admin/adverts/:id
 ### Приклад запиту
 
 ```json
-PATCH /admin/users/:id
+PATCH /admin/users/2
 {
-	
+    "firstName" : "Better",
+    "lastName" : "Name"
 }
 ```
 
@@ -765,6 +766,7 @@ PATCH /admin/users/:id
 
 ### Помилки
 
+* 400 - User with id [id] not found
 * 401 - Unauthorized
 
 <a name="link_PATCH_/admin/adverts/:id"></a>
@@ -777,9 +779,9 @@ PATCH /admin/users/:id
 ### Приклад запиту
 
 ```json
-PATCH /admin/adverts/:id
+PATCH /admin/adverts/3
 {
-	
+    "description" : "Better description"
 }
 ```
 
@@ -793,6 +795,7 @@ PATCH /admin/adverts/:id
 
 ### Помилки
 
+* 400 - Advert with id [id] not found
 * 401 - Unauthorized
 
 <a name="link_PATCH_/admin/languages/:id"></a>
@@ -805,9 +808,9 @@ PATCH /admin/adverts/:id
 ### Приклад запиту
 
 ```json
-PATCH /admin/languages/:id
+PATCH /admin/languages/5
 {
-	
+    "languageEn": "English"
 }
 ```
 
@@ -821,6 +824,7 @@ PATCH /admin/languages/:id
 
 ### Помилки
 
+* 400 - Language with id [id] not found
 * 401 - Unauthorized
 
 <a name="link_PATCH_/admin/specializations/:id"></a>
@@ -833,9 +837,9 @@ PATCH /admin/languages/:id
 ### Приклад запиту
 
 ```json
-PATCH /admin/specializations/:id
+PATCH /admin/specializations/2
 {
-	
+    "specializationUa": "Розмовна мова"
 }
 ```
 
@@ -849,6 +853,7 @@ PATCH /admin/specializations/:id
 
 ### Помилки
 
+* 400 - Specialization with id [id] not found
 * 401 - Unauthorized
 
 <a name="link_PATCH_/admin/countries/:id"></a>
@@ -861,9 +866,9 @@ PATCH /admin/specializations/:id
 ### Приклад запиту
 
 ```json
-PATCH /admin/countries/:id
+PATCH /admin/countries/4
 {
-	
+    "alpha2": "UA"
 }
 ```
 
@@ -877,6 +882,7 @@ PATCH /admin/countries/:id
 
 ### Помилки
 
+* 400 - Country with id [id] not found
 * 401 - Unauthorized
 
 <a name="link_POST_/admin/languages"></a>
@@ -907,6 +913,12 @@ POST /admin/languages
 
 ### Помилки
 
+* 400 - Field must be a string
+* 400 - Field must be 2 characters long
+* 400 - alpha2 should not be empty
+* 400 - languageEn should not be empty
+* 400 - languageUa should not be empty
+* 400 - Language already exists in the database
 * 401 - Unauthorized
 
 <a name="link_POST_/admin/specializations"></a>
@@ -936,6 +948,9 @@ POST /admin/specializations
 
 ### Помилки
 
+* 400 - specializationEn should not be empty
+* 400 - specializationUa should not be empty
+* 400 - Specialization already exists in the database
 * 401 - Unauthorized
 
 <a name="link_POST_/admin/countries"></a>
@@ -964,6 +979,10 @@ POST /admin/countries
 
 ### Помилки
 
+* 400 - Field must be a string
+* 400 - Field must be 2 characters long
+* 400 - alpha2 should not be empty
+* 400 - Country already exists in the database
 * 401 - Unauthorized
 
 <a name="link_DELETE_/admin/languages/:id"></a>
